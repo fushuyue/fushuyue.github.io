@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>希腊值详细整理 | 长海冰茶火</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">希腊值详细整理</h1><a id="logo" href="/.">长海冰茶火</a><p class="description">不想当engineer的quant不是一个好trader</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">希腊值详细整理</h1><div class="post-meta">Oct 15, 2016<span> | </span><span class="category"><a href="/categories/Option/">Option</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><p>Risks for the options are multi-dimensional. We must know how changing market conditions are likely to change an option’s value and risk associated with the position.</p>
+<h3 id="1-Delta-rate-of-change-in-the-option-value"><a href="#1-Delta-rate-of-change-in-the-option-value" class="headerlink" title="1.Delta: rate of change in the option value"></a>1.Delta: rate of change in the option value</h3><ul>
+<li><p>The directional risk of an option in terms of an equivalent position in the underlying contract.</p>
+<ul>
+<li>For each purchased (sold) option you have a directional risk equivalent to being long (short) 50% of an underlying contract</li>
+</ul>
+</li>
+<li><p>Being long delta means that the price of the option increases as the spot goes up. </p>
+</li>
+<li><p>Approximately the probability that an option will finish in-the-money.</p>
+</li>
+<li><p>When the option is deep in the money, its value changes at a rate almost identical to that of the underlying. When the option is deep out of money, its value only slightly changed. </p>
+</li>
+<li><p>The delta increases as the price of the underlying increases.</p>
+</li>
+</ul>
+<h3 id="2-Gamma-rate-of-change-in-the-delta-value"><a href="#2-Gamma-rate-of-change-in-the-delta-value" class="headerlink" title="2.Gamma: rate of change in the delta value"></a>2.Gamma: rate of change in the delta value</h3><ul>
+<li><p>The rate of change in an option’s delta with respect to movement in the price of the underlying contract</p>
+</li>
+<li><p>Both calls and puts must have positive gamma</p>
+</li>
+<li><p>Gamma increases as the option moves from being in-the-money reaching its peak when the option is at-the-money. Then as the option moves out-of-the-money the Gamma then decreases. Gamma increases as time to maturity decreases.</p>
+</li>
+<li><p>When Gamma is negative, if market goes up, the delta decrease which is bad for my position. So when Gamma is negative, we want the market to be quite.</p>
+<ul>
+<li>if the market sits still, profits come from theta</li>
+<li>Gamma and theta are always opposite sign</li>
+</ul>
+</li>
+<li><p>So for long Gamma, we want the market to make big move.</p>
+</li>
+</ul>
+<h3 id="3-Theta"><a href="#3-Theta" class="headerlink" title="3. Theta"></a>3. Theta</h3><ul>
+<li><p>The sensitivity of an option’s value to the passage of time</p>
+<ul>
+<li>Usually expressed as the change in value per one day’s passage of time</li>
+</ul>
+</li>
+<li><p>Depends on two factors: </p>
+<ul>
+<li><ol>
+<li>decay in volatility value</li>
+</ol>
+</li>
+<li><ol>
+<li>decay in interest value</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>An option which loses value as time passes will have a negative theta. the great majority of options lose value as time passes.</p>
+</li>
+<li><p>A positive theta: when present value of the expected value of the underlying asset is equal to the value today.</p>
+<ul>
+<li>If there are no changes in other market conditions, as time passes, the value of the option will rise to intrinsic value. (negative time value)</li>
+<li>must be deep in-the-money, so that time value is negative</li>
+<li>must be European and subject to stock-type settlement</li>
+<li>Intuitively: the value of the option is known, so it needs to be compounded to today –&gt; negative time value.</li>
+</ul>
+</li>
+<li><p>As time passes the theta of an at-the-money option increases.(absolute value)</p>
+</li>
+</ul>
+<h3 id="4-Vega-The-sensitivity-of-an-option’s-value-to-a-change-in-volatility"><a href="#4-Vega-The-sensitivity-of-an-option’s-value-to-a-change-in-volatility" class="headerlink" title="4. Vega: The sensitivity of an option’s value to a change in volatility"></a>4. Vega: The sensitivity of an option’s value to a change in volatility</h3><ul>
+<li>the change in implied volatility</li>
+<li>All options have positive vega values</li>
+<li><code>Long-term options are more sensitive to a change in volatility than short-term options.</code><ul>
+<li>A long-term option always has a greater vega value than an equivalent short-term option.</li>
+</ul>
+</li>
+<li><code>As time passes the theta of an at-the-money option increases.</code></li>
+</ul>
+<h4 id="5-Rho-The-sensitivity-of-an-option’s-value-to-a-change-in-interest-rates"><a href="#5-Rho-The-sensitivity-of-an-option’s-value-to-a-change-in-interest-rates" class="headerlink" title="5. Rho: The sensitivity of an option’s value to a change in interest rates"></a>5. Rho: The sensitivity of an option’s value to a change in interest rates</h4><ul>
+<li><code>Can be determined by wheter a call(put) is a better or worse substitute for the outright purchase of the underlying contract</code></li>
+<li>If the underlying is a futures contract, and options are subject to futures-type settlement, all options have a rho value of zero.</li>
+<li><p>For stock type settlement:</p>
+<ul>
+<li>options on futures have negative rho values<ul>
+<li>future contracts have no carrying cost but options have</li>
+<li>the effect is small since the value of the option is small</li>
+</ul>
+</li>
+<li>calls have positive, puts are negative</li>
+</ul>
+</li>
+<li><p>In stock option markets, interest and dividends always have the opposite effect on option values.</p>
+</li>
+<li><p>The amount of money and the length of the investment determine how sensitive an investment is to a change in interest rates</p>
+<ul>
+<li>An in-the-money option has a greater rho value than an equivalent at-the-money or out-of-the-money option</li>
+<li>A long-term option has a greater rho value than equivalent short-term option.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Questions"><a href="#Questions" class="headerlink" title="Questions:"></a>Questions:</h3><ol>
+<li>An at-the-money option always has a greater gamma, theta, and vega than an equivalent in-the-money or out-of-the-money option.</li>
+<li>Delta is approximately the probability that an option will finish in-the-money.</li>
+<li>All options have positive gamma</li>
+</ol>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2016/10/15/希腊值详解/" data-id="ciubpr04i0001emvwrsw35arg" class="article-share-link">分享到</a><div class="tags"><a href="/tags/quant/">quant</a></div><div class="post-nav"><a href="/2016/10/15/python多线程编程/" class="pre">python多线程编程</a><a href="/2016/10/15/利用卷积神经网络学习CIFAR10/" class="next">利用卷积神经网络学习CIFAR10</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Option/">Option</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/深度学习/">深度学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/threading/" style="font-size: 15px;">threading</a> <a href="/tags/quant/" style="font-size: 15px;">quant</a> <a href="/tags/cuda/" style="font-size: 15px;">cuda</a> <a href="/tags/CNN/" style="font-size: 15px;">CNN</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/python多线程编程/">python多线程编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/希腊值详解/">希腊值详细整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/利用卷积神经网络学习CIFAR10/">利用卷积神经网络学习CIFAR10</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 关于我</i></div><ul></ul><a href="http://www.github.com/fushuyue" title="Github" target="_blank">Github</a><ul></ul><a href="https://www.linkedin.com/in/fushuyue" title="Linkedin" target="_blank">Linkedin</a><ul></ul><a href="sfu11@illinois.edu" title="Email" target="_blank">Email</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">长海冰茶火.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
