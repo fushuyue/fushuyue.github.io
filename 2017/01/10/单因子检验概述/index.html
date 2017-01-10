@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>单因子检验概述 | 长海冰茶火</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">单因子检验概述</h1><a id="logo" href="/.">长海冰茶火</a><p class="description">很惭愧，做了一点微小的工作和笔记</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">单因子检验概述</h1><div class="post-meta">Jan 10, 2017<span> | </span><span class="category"><a href="/categories/量化投资/">量化投资</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2017/01/10/单因子检验概述/" href="/2017/01/10/单因子检验概述/#comments" class="ds-thread-count"></a><div class="post-content"><p>寻找因子的标准: </p>
+<ol>
+<li>有<code>逻辑意义</code>：在逻辑上应该和收益率存在一定的相关性</li>
+<li>有<code>统计显著性</code>：在实证上能够<code>有效区分个股</code>的因子<ul>
+<li>因子值对于个股未来收益有相关性</li>
+</ul>
+</li>
+</ol>
+<h2 id="评价体系"><a href="#评价体系" class="headerlink" title="评价体系"></a>评价体系</h2><h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><ol>
+<li>回测的样本空间: 剔除上市不满 6 个月、ST、*ST 后的全部 A 股</li>
+<li>回测时间</li>
+<li>组合构建和调仓: 分组检验有效性时将样本空间内所有股票分成 10 组，每月调仓，构建等权组合</li>
+<li>基准: 市场等权组合</li>
+</ol>
+<h3 id="A股市场分布规律"><a href="#A股市场分布规律" class="headerlink" title="A股市场分布规律"></a>A股市场分布规律</h3><p>观察因子在A股市场的<code>分布规律</code>，通过分析因子在不同行业及不同规模上市公司间的差异，判断在单因子回归测试中是否应该处理<code>行业、规模</code>因素的影响。</p>
+<ol>
+<li>行业间因子差异</li>
+<li>不同规模公司间因子差异</li>
+<li>各因子相关性(多重共线性的处理)</li>
+</ol>
+<p>因子本身分布: 主要用于了解因子分布和处理极值问题</p>
+<ul>
+<li>统计分布指标</li>
+<li>概率密度分布图</li>
+</ul>
+<h3 id="基础数据处理"><a href="#基础数据处理" class="headerlink" title="基础数据处理"></a>基础数据处理</h3><ol>
+<li>中位数去极值:设第T期某因子在所有个股上的暴露度序列为𝐷𝑖，𝐷𝑀为该序列中位数，𝐷𝑀1为序列<code>|𝐷𝑖−𝐷𝑀|</code>的中位数，则将序列𝐷𝑖中所有大于<code>𝐷𝑀+5𝐷𝑀1</code>的数重设为<code>𝐷𝑀+5𝐷𝑀1</code>，将序列𝐷𝑖中所有小于<code>𝐷𝑀−5𝐷𝑀1</code>的数重设为<code>𝐷𝑀−5𝐷𝑀1</code>;</li>
+<li>标准化:将去极值处理后的因子暴露度序列减去其现在的均值、除以其标准差，得到一个新的近似服从N(0,1)分布的序列，这样做可以让不同因子的暴露度之间具有可比性;</li>
+<li>缺失值处理</li>
+</ol>
+<h3 id="单因子回归-加权最小二乘回归"><a href="#单因子回归-加权最小二乘回归" class="headerlink" title="单因子回归: 加权最小二乘回归"></a>单因子回归: 加权最小二乘回归</h3><p>将因子在第T期的暴露度与T+1期的股票收益进行线性回归，所得到的回归系数即为因子在T期的因子收益率，同时还能得到该因子收益率在本期回归中的显著度水平——t值。</p>
+<p>t值：被测单因子对模型的解释能力是否显著</p>
+<ol>
+<li><p>因子收益率序列𝑡检验：确定因子𝑘在第𝑡期是否和股票收益率显著相关</p>
+<ul>
+<li>𝑡值绝对值序列的均值</li>
+<li>𝑡值绝对值序列大于2的比例：避免出现少数数值特别大的样本值拉高均值</li>
+<li>因子收益率𝑓序列的方向一致性</li>
+<li>t 值序列均值的绝对值除以 t 值序列的标准差——结合显著性和波动性，辅助判断因子是否有效、稳健。</li>
+</ul>
+</li>
+<li><p>根据回归后的t值，将因子分为有效和无效。有效因子又分为收益类因子和风险类因子</p>
+<ul>
+<li>根据因子收益率序列的t值将因子分为有效和无效</li>
+<li>根据因子收益率序列的方向一致性分为收益类和风险类因子</li>
+</ul>
+</li>
+</ol>
+<h3 id="信息比率IC-下期收益率和本期因子暴露度的线性相关程度"><a href="#信息比率IC-下期收益率和本期因子暴露度的线性相关程度" class="headerlink" title="信息比率IC: 下期收益率和本期因子暴露度的线性相关程度"></a>信息比率IC: 下期收益率和本期因子暴露度的线性相关程度</h3><p>在截面期上用其做因变量对市值因子及行业因子(哑变量)做线性回归，<code>取残差作为因子值的一个替代</code>。这样做可以消除行业因素和市值因素对因子的影响。</p>
+<ul>
+<li>IC值序列的均值大小——因子显著性;</li>
+<li>IC值序列的标准差——因子稳定性;</li>
+<li>IR比率(IC 值序列均值与标准差的比值)——因子有效性;</li>
+<li>IC值累积曲线——随时间变化效果是否稳定;</li>
+<li>IC值序列大于零的占比——因子作用方向是否稳定。</li>
+</ul>
+<ol>
+<li>均值，正向显著比例，负向显著比例</li>
+<li>状态切换次数占比<ul>
+<li>如果当月的回归系数与最近一次显著的系数正负 符号相同，则记为同向，如果方向发生了切换，则认为记为切换</li>
+<li>用以显示指标的显著性和趋势性越强</li>
+</ul>
+</li>
+<li>各月份的信息系数IC时间序列散点图<ul>
+<li>不显著，正显著，负显著点用不同颜色标注</li>
+</ul>
+</li>
+</ol>
+<h3 id="分组检验"><a href="#分组检验" class="headerlink" title="分组检验"></a>分组检验</h3><p>按<code>全市场</code>和<code>行业</code>将因子从大到小分组后分别计算如下指标, 观测单调性.</p>
+<p>行业中性方法: 在每个一级行业内部对所有个股按因子大小进行排序，每个行业内均分成N个分层组合。如图表6所示，黄色方块代表各行业内个股初始权重，可以相等也可以不等(我们直接取相等权重进行测试)，分层具体操作方法为N等分行业内个股权重累加值。</p>
+<p>市值中性方法：类似于行业中性方法。</p>
+<p>行业间/市值间分组情况。</p>
+<h4 id="基本指标"><a href="#基本指标" class="headerlink" title="基本指标"></a>基本指标</h4><ol>
+<li>累计收益率，年化收益率，年化超额收益(表格内的柱状图)</li>
+<li>夏普比，信息比 </li>
+<li>月胜率，最大回撤</li>
+<li>月均换手<ul>
+<li>若换手高，说明因子值不太稳定</li>
+</ul>
+</li>
+<li>多空组合(做多第 1 组，做空第 10 组)的历史表现<ul>
+<li>收益率，月胜率，最大回撤，波动率，夏普比率，信息比率</li>
+</ul>
+</li>
+</ol>
+<h4 id="测试展示图"><a href="#测试展示图" class="headerlink" title="测试展示图"></a>测试展示图</h4><ul>
+<li>各组合回测绩效分析表</li>
+<li>各组回测净值图和基准组合净值图</li>
+<li>各组相对净值图</li>
+<li>top组合月度/年度超额收益</li>
+<li>多空组合月度超额收益和多空组合净值</li>
+</ul>
+<h4 id="因子分层"><a href="#因子分层" class="headerlink" title="因子分层"></a>因子分层</h4><ol>
+<li>计算因子与其他因子的相关系数</li>
+<li>因子分层后组合年化收益率</li>
+</ol>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/01/10/单因子检验概述/" data-id="cixr3t04b000ssyk16222ntnj" class="article-share-link">分享到</a><div class="tags"><a href="/tags/quant/">quant</a></div><div class="post-nav"><a href="/2017/01/04/CTA策略设计流程/" class="next">CTA策略设计流程</a></div><div data-thread-key="2017/01/10/单因子检验概述/" data-title="单因子检验概述" data-url="http://yoursite.com/2017/01/10/单因子检验概述/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2017/01/10/单因子检验概述/" data-title="单因子检验概述" data-url="http://yoursite.com/2017/01/10/单因子检验概述/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python爬虫/">python爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/期权/">期权</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/深度学习/">深度学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/量化交易/">量化交易</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/量化投资/">量化投资</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/threading/" style="font-size: 15px;">threading</a> <a href="/tags/Adaboost/" style="font-size: 15px;">Adaboost</a> <a href="/tags/CTA/" style="font-size: 15px;">CTA</a> <a href="/tags/quant/" style="font-size: 15px;">quant</a> <a href="/tags/RNN/" style="font-size: 15px;">RNN</a> <a href="/tags/LSTM/" style="font-size: 15px;">LSTM</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/multiprocessing/" style="font-size: 15px;">multiprocessing</a> <a href="/tags/urllib/" style="font-size: 15px;">urllib</a> <a href="/tags/cnn/" style="font-size: 15px;">cnn</a> <a href="/tags/cuda/" style="font-size: 15px;">cuda</a> <a href="/tags/MFM/" style="font-size: 15px;">MFM</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/择时/" style="font-size: 15px;">择时</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/单因子检验概述/">单因子检验概述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/04/CTA策略设计流程/">CTA策略设计流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/期货市场概述/">期货市场概述</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/多因子模型/">多因子模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/pandas基本操作/">pandas基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/pandas中的时间处理/">pandas中的时间处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/各类机器学习应用/">各类机器学习应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/Adaboost算法/">Adaboost算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/LSTM模型动作识别/">LSTM模型动作识别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/RNN笔记/">RNN笔记</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 关于我</i></div><ul></ul><a href="http://www.github.com/fushuyue" title="Github" target="_blank">Github</a><ul></ul><a href="https://www.linkedin.com/in/fushuyue" title="Linkedin" target="_blank">Linkedin</a><ul></ul><a href="sfu11@illinois.edu" title="Email" target="_blank">Email</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">长海冰茶火.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'fushuyue'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
