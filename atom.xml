@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-03T10:22:06.000Z</updated>
+  <updated>2017-09-03T10:28:42.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>多因子模型</title>
+    <title>在不同电脑上更新blog</title>
     <link href="http://yoursite.com/2017/09/03/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0blog/"/>
     <id>http://yoursite.com/2017/09/03/在不同电脑上更新blog/</id>
     <published>2017-09-02T16:00:00.000Z</published>
-    <updated>2017-09-03T10:22:06.000Z</updated>
+    <updated>2017-09-03T10:28:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>电脑充电板出了点问题，拿apple store修理后竟然把我的硬盘清空。。真是店大欺客。由于电脑所有配置都消失，同时也想在公司电脑上发布博客，因此查了点资料并在此记录。</p>
 <h3 id="Set-Up-Hexo"><a href="#Set-Up-Hexo" class="headerlink" title="Set Up Hexo"></a>Set Up Hexo</h3><ol>
