@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-03T10:28:42.000Z</updated>
+  <updated>2017-09-03T15:07:28.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cuda installation guide</title>
+    <link href="http://yoursite.com/2017/09/03/cuda-installation-guide/"/>
+    <id>http://yoursite.com/2017/09/03/cuda-installation-guide/</id>
+    <published>2017-09-03T10:50:13.000Z</published>
+    <updated>2017-09-03T15:07:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>CUDA® is a parallel computing platform and programming model invented by NVIDIA. It enables dramatic increases in computing performance by harnessing the power of the graphics processing unit (GPU).
+</code></pre><h4 id="Prerequsites"><a href="#Prerequsites" class="headerlink" title="Prerequsites:"></a>Prerequsites:</h4><ol>
+<li>cuda capable GPU</li>
+<li>Ubuntu 16.04</li>
+<li>gcc </li>
+</ol>
+<h3 id="Step-One-Install-Nvidia-Drive"><a href="#Step-One-Install-Nvidia-Drive" class="headerlink" title="Step One: Install Nvidia Drive"></a>Step One: Install Nvidia Drive</h3><h4 id="Install-build-essential"><a href="#Install-build-essential" class="headerlink" title="Install build-essential"></a>Install build-essential</h4><figure class="highlight q"><table><tr><td class="code"><pre><div class="line">apt-<span class="built_in">get</span> install freeglut3-<span class="built_in">dev</span> build-essential libx11-<span class="built_in">dev</span> libxmu-<span class="built_in">dev</span> libgl1-mesa-<span class="built_in">dev</span> libglu1-mesa libglu1-mesa-<span class="built_in">dev</span> libxi-<span class="built_in">dev</span></div></pre></td></tr></table></figure>
+<h4 id="Pre-install-actions"><a href="#Pre-install-actions" class="headerlink" title="Pre-install actions"></a>Pre-install actions</h4><ol>
+<li><p>Close secure boot from UEFI BIOS. <code>really important</code></p>
+</li>
+<li><p>Enter teletype</p>
+</li>
+<li><p>Stop lightdm<br><code>sudo /etc/init.d/lightdm stop</code> </p>
+</li>
+<li><p>Blacklist nouveau drive</p>
+</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="code"><pre><div class="line"><span class="keyword">ll</span> /etc/modprobe.d/blacklist.<span class="keyword">conf</span></div><div class="line">sudo chmod <span class="number">666</span> /etc/modprobe.d/blacklist.<span class="keyword">conf</span></div><div class="line">sudo <span class="keyword">vi</span> /etc/modprobe.d/blacklist.<span class="keyword">conf</span></div></pre></td></tr></table></figure>
+<p>Add following lines:<br><figure class="highlight armasm"><table><tr><td class="code"><pre><div class="line"><span class="keyword">blacklist </span>vga16fb </div><div class="line"><span class="keyword">blacklist </span>nouveau </div><div class="line"><span class="keyword">blacklist </span>rivafb </div><div class="line"><span class="keyword">blacklist </span>rivatv </div><div class="line"><span class="keyword">blacklist </span>nvidiafb</div></pre></td></tr></table></figure></p>
+<p>Go back to terminal<br><figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">sudo chmod 644 /etc/modprobe.<span class="keyword">d</span>/blacklist.<span class="keyword">conf</span></div><div class="line"></div><div class="line">sudo <span class="keyword">update</span>-initramfs -<span class="keyword">u</span></div></pre></td></tr></table></figure></p>
+<p>Check if nouveau is blacklisted: <code>lsmod | grep nouveau</code></p>
+<h4 id="Download-and-install-drive"><a href="#Download-and-install-drive" class="headerlink" title="Download and install drive"></a>Download and install drive</h4><figure class="highlight smali"><table><tr><td class="code"><pre><div class="line">sudo<span class="built_in"> add-apt-repository </span>ppa:graphics-drivers/ppa</div><div class="line">sudo apt-get update</div><div class="line">ubuntu-drivers devices  <span class="comment"># select the devices you want</span></div><div class="line">sudo apt-get install nvidia-384</div><div class="line">sudo reboot</div><div class="line"></div><div class="line"><span class="comment"># reboot</span></div><div class="line"></div><div class="line"><span class="comment"># check is drive is installed</span></div><div class="line">sudo nvidia-smi</div></pre></td></tr></table></figure>
+<h3 id="Step-Two-Install-Cuda"><a href="#Step-Two-Install-Cuda" class="headerlink" title="Step Two: Install Cuda"></a>Step Two: Install Cuda</h3><ol>
+<li><p>Download runfile from the nvidia website<br><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">cuda</a></p>
+</li>
+<li><p>Install<br><code>sudo sh cuda_8.0.61_375.26_linux.run</code></p>
+</li>
+</ol>
+<blockquote>
+<p>Since we have already install the nvidia drive, we must select not to install drive when installing cuda!</p>
+</blockquote>
+<ol>
+<li>Set up environment variable </li>
+</ol>
+<p>edit <code>/etc/profile</code> with the following </p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">export PATH=<span class="regexp">/usr/</span>local<span class="regexp">/cuda-8.0/</span>bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line">export LD_LIBRARY_PATH=<span class="regexp">/usr/</span>local<span class="regexp">/cuda-8.0/</span>lib64:<span class="variable">$LD_LIBRARY_PATH</span></div></pre></td></tr></table></figure>
+<p>Type  <code>source /etc/profile</code> in terminal.</p>
+<p>In case something went wrong:<br><figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line"><span class="comment"># edit /etc/ld.so.conf.d/cuda.conf</span></div><div class="line">/usr/local/cuda/lib64</div><div class="line">/<span class="class"><span class="keyword">lib</span></span></div><div class="line">/usr/<span class="class"><span class="keyword">lib</span></span></div><div class="line">/usr/lib32</div><div class="line"></div><div class="line"><span class="comment"># type sudo ldconfig in terminal</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>Check if cuda is installed: <code>nvcc --version</code></li>
+</ol>
+<h3 id="Step-Three-Install-Cuda-Samples"><a href="#Step-Three-Install-Cuda-Samples" class="headerlink" title="Step Three: Install Cuda Samples"></a>Step Three: Install Cuda Samples</h3><ol>
+<li>change to sample directory<br><code>cd /home/xuezhisd/NVIDIA_CUDA-7.0_Samples</code></li>
+<li>make file<br><code>make –j</code></li>
+<li>change to release directory<br><code>cd ./bin/x86_64/linux/release</code></li>
+<li>check if cuda is installed properly<br><code>./deviceQuery</code></li>
+</ol>
+<p>If installed properly, terminal prints out the information about your GPU.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      how to install cuda and nvidia drive in ubuntu 16.04
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="cuda" scheme="http://yoursite.com/tags/cuda/"/>
+    
+  </entry>
   
   <entry>
     <title>在不同电脑上更新blog</title>
@@ -1303,46 +1373,6 @@
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="multiprocessing" scheme="http://yoursite.com/tags/multiprocessing/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>With statement in python</title>
-    <link href="http://yoursite.com/2016/10/16/python_With_statement/"/>
-    <id>http://yoursite.com/2016/10/16/python_With_statement/</id>
-    <published>2016-10-16T15:10:59.000Z</published>
-    <updated>2016-10-17T04:12:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>The <code>with</code> statement is used to wrap the execution of a block with methods defined by a context manager. This allows common <code>try...except...finally</code> usage patterns to be encapsulated for convenient reuse.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># original code</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    f = open(<span class="string">'/path/to/file'</span>, <span class="string">'r'</span>)</div><div class="line">    print(f.read())</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    <span class="keyword">if</span> f:</div><div class="line">        f.close()</div><div class="line"></div><div class="line"><span class="comment"># use 'with' statement</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'/path/to/file'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">    print(f.read())</div></pre></td></tr></table></figure>
-<p>How does <code>with</code> statement works? <br></p>
-<p>When execuating a <code>with</code> statment, an object called <code>Context managers</code> are normally invoked.<br>The context manager handles the entry into, and the exit from, the desired runtime context for the execution of the block of code.</p>
-<ol>
-<li><p>The context expression (the expression given in the with_item) is evaluated to obtain a context manager.</p>
-</li>
-<li><p>The context manager’s <code>__exit__()</code> is loaded for later use.</p>
-</li>
-<li><p>The context manager’s <code>__enter__()</code> method is invoked.</p>
-</li>
-<li><p>If a target was included in the with statement, the return value from <code>__enter__()</code> is assigned to it.</p>
-</li>
-<li><p>The context manager’s <code>__exit__()</code> method is invoked. If an exception caused the suite to be exited, its type, value, and traceback are passed as arguments to <code>__exit__()</code>. Otherwise, three None arguments are supplied.</p>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">controlled_execution</span>:</span></div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></div><div class="line">           set things up</div><div class="line">           <span class="keyword">return</span> thing</div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, traceback)</span>:</span></div><div class="line">           tear things down</div><div class="line"></div><div class="line">   <span class="keyword">with</span> controlled_execution() <span class="keyword">as</span> thing:</div><div class="line">        some code</div></pre></td></tr></table></figure>
-<p>The with statement guarantees that if the <code>__enter__()</code> method returns without an error, then <code>__exit__()</code> will always be called. </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;The &lt;code&gt;with&lt;/code&gt; statement is used to wrap the execution of a block with methods defined by a context manager. This allows common &lt;c
-    
-    </summary>
-    
-      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
