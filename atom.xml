@@ -1,0 +1,1444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>长海冰茶火</title>
+  <subtitle>很惭愧，做了一点微小的工作和笔记</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-01-10T05:55:43.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Shuyue Fu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>单因子检验概述</title>
+    <link href="http://yoursite.com/2017/01/10/%E5%8D%95%E5%9B%A0%E5%AD%90%E6%A3%80%E9%AA%8C%E6%A6%82%E8%BF%B0/"/>
+    <id>http://yoursite.com/2017/01/10/单因子检验概述/</id>
+    <published>2017-01-10T05:55:01.000Z</published>
+    <updated>2017-01-10T05:55:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>寻找因子的标准: </p>
+<ol>
+<li>有<code>逻辑意义</code>：在逻辑上应该和收益率存在一定的相关性</li>
+<li>有<code>统计显著性</code>：在实证上能够<code>有效区分个股</code>的因子<ul>
+<li>因子值对于个股未来收益有相关性</li>
+</ul>
+</li>
+</ol>
+<h2 id="评价体系"><a href="#评价体系" class="headerlink" title="评价体系"></a>评价体系</h2><h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><ol>
+<li>回测的样本空间: 剔除上市不满 6 个月、ST、*ST 后的全部 A 股</li>
+<li>回测时间</li>
+<li>组合构建和调仓: 分组检验有效性时将样本空间内所有股票分成 10 组，每月调仓，构建等权组合</li>
+<li>基准: 市场等权组合</li>
+</ol>
+<h3 id="A股市场分布规律"><a href="#A股市场分布规律" class="headerlink" title="A股市场分布规律"></a>A股市场分布规律</h3><p>观察因子在A股市场的<code>分布规律</code>，通过分析因子在不同行业及不同规模上市公司间的差异，判断在单因子回归测试中是否应该处理<code>行业、规模</code>因素的影响。</p>
+<ol>
+<li>行业间因子差异</li>
+<li>不同规模公司间因子差异</li>
+<li>各因子相关性(多重共线性的处理)</li>
+</ol>
+<p>因子本身分布: 主要用于了解因子分布和处理极值问题</p>
+<ul>
+<li>统计分布指标</li>
+<li>概率密度分布图</li>
+</ul>
+<h3 id="基础数据处理"><a href="#基础数据处理" class="headerlink" title="基础数据处理"></a>基础数据处理</h3><ol>
+<li>中位数去极值:设第T期某因子在所有个股上的暴露度序列为𝐷𝑖，𝐷𝑀为该序列中位数，𝐷𝑀1为序列<code>|𝐷𝑖−𝐷𝑀|</code>的中位数，则将序列𝐷𝑖中所有大于<code>𝐷𝑀+5𝐷𝑀1</code>的数重设为<code>𝐷𝑀+5𝐷𝑀1</code>，将序列𝐷𝑖中所有小于<code>𝐷𝑀−5𝐷𝑀1</code>的数重设为<code>𝐷𝑀−5𝐷𝑀1</code>;</li>
+<li>标准化:将去极值处理后的因子暴露度序列减去其现在的均值、除以其标准差，得到一个新的近似服从N(0,1)分布的序列，这样做可以让不同因子的暴露度之间具有可比性;</li>
+<li>缺失值处理</li>
+</ol>
+<h3 id="单因子回归-加权最小二乘回归"><a href="#单因子回归-加权最小二乘回归" class="headerlink" title="单因子回归: 加权最小二乘回归"></a>单因子回归: 加权最小二乘回归</h3><p>将因子在第T期的暴露度与T+1期的股票收益进行线性回归，所得到的回归系数即为因子在T期的因子收益率，同时还能得到该因子收益率在本期回归中的显著度水平——t值。</p>
+<p>t值：被测单因子对模型的解释能力是否显著</p>
+<ol>
+<li><p>因子收益率序列𝑡检验：确定因子𝑘在第𝑡期是否和股票收益率显著相关</p>
+<ul>
+<li>𝑡值绝对值序列的均值</li>
+<li>𝑡值绝对值序列大于2的比例：避免出现少数数值特别大的样本值拉高均值</li>
+<li>因子收益率𝑓序列的方向一致性</li>
+<li>t 值序列均值的绝对值除以 t 值序列的标准差——结合显著性和波动性，辅助判断因子是否有效、稳健。</li>
+</ul>
+</li>
+<li><p>根据回归后的t值，将因子分为有效和无效。有效因子又分为收益类因子和风险类因子</p>
+<ul>
+<li>根据因子收益率序列的t值将因子分为有效和无效</li>
+<li>根据因子收益率序列的方向一致性分为收益类和风险类因子</li>
+</ul>
+</li>
+</ol>
+<h3 id="信息比率IC-下期收益率和本期因子暴露度的线性相关程度"><a href="#信息比率IC-下期收益率和本期因子暴露度的线性相关程度" class="headerlink" title="信息比率IC: 下期收益率和本期因子暴露度的线性相关程度"></a>信息比率IC: 下期收益率和本期因子暴露度的线性相关程度</h3><p>在截面期上用其做因变量对市值因子及行业因子(哑变量)做线性回归，<code>取残差作为因子值的一个替代</code>。这样做可以消除行业因素和市值因素对因子的影响。</p>
+<ul>
+<li>IC值序列的均值大小——因子显著性;</li>
+<li>IC值序列的标准差——因子稳定性;</li>
+<li>IR比率(IC 值序列均值与标准差的比值)——因子有效性;</li>
+<li>IC值累积曲线——随时间变化效果是否稳定;</li>
+<li>IC值序列大于零的占比——因子作用方向是否稳定。</li>
+</ul>
+<ol>
+<li>均值，正向显著比例，负向显著比例</li>
+<li>状态切换次数占比<ul>
+<li>如果当月的回归系数与最近一次显著的系数正负 符号相同，则记为同向，如果方向发生了切换，则认为记为切换</li>
+<li>用以显示指标的显著性和趋势性越强</li>
+</ul>
+</li>
+<li>各月份的信息系数IC时间序列散点图<ul>
+<li>不显著，正显著，负显著点用不同颜色标注</li>
+</ul>
+</li>
+</ol>
+<h3 id="分组检验"><a href="#分组检验" class="headerlink" title="分组检验"></a>分组检验</h3><p>按<code>全市场</code>和<code>行业</code>将因子从大到小分组后分别计算如下指标, 观测单调性.</p>
+<p>行业中性方法: 在每个一级行业内部对所有个股按因子大小进行排序，每个行业内均分成N个分层组合。如图表6所示，黄色方块代表各行业内个股初始权重，可以相等也可以不等(我们直接取相等权重进行测试)，分层具体操作方法为N等分行业内个股权重累加值。</p>
+<p>市值中性方法：类似于行业中性方法。</p>
+<p>行业间/市值间分组情况。</p>
+<h4 id="基本指标"><a href="#基本指标" class="headerlink" title="基本指标"></a>基本指标</h4><ol>
+<li>累计收益率，年化收益率，年化超额收益(表格内的柱状图)</li>
+<li>夏普比，信息比 </li>
+<li>月胜率，最大回撤</li>
+<li>月均换手<ul>
+<li>若换手高，说明因子值不太稳定</li>
+</ul>
+</li>
+<li>多空组合(做多第 1 组，做空第 10 组)的历史表现<ul>
+<li>收益率，月胜率，最大回撤，波动率，夏普比率，信息比率</li>
+</ul>
+</li>
+</ol>
+<h4 id="测试展示图"><a href="#测试展示图" class="headerlink" title="测试展示图"></a>测试展示图</h4><ul>
+<li>各组合回测绩效分析表</li>
+<li>各组回测净值图和基准组合净值图</li>
+<li>各组相对净值图</li>
+<li>top组合月度/年度超额收益</li>
+<li>多空组合月度超额收益和多空组合净值</li>
+</ul>
+<h4 id="因子分层"><a href="#因子分层" class="headerlink" title="因子分层"></a>因子分层</h4><ol>
+<li>计算因子与其他因子的相关系数</li>
+<li>因子分层后组合年化收益率</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;寻找因子的标准: &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;有&lt;code&gt;逻辑意义&lt;/code&gt;：在逻辑上应该和收益率存在一定的相关性&lt;/li&gt;
+&lt;li&gt;有&lt;code&gt;统计显著性&lt;/code&gt;：在实证上能够&lt;code&gt;有效区分个股&lt;/code&gt;的因子&lt;ul&gt;
+&lt;li&gt;因子值对于个股未来收
+    
+    </summary>
+    
+      <category term="量化投资" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTA策略设计流程</title>
+    <link href="http://yoursite.com/2017/01/04/CTA%E7%AD%96%E7%95%A5%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B/"/>
+    <id>http://yoursite.com/2017/01/04/CTA策略设计流程/</id>
+    <published>2017-01-04T14:38:38.000Z</published>
+    <updated>2017-01-04T14:41:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>对于不同的期货品种来说，受市场关注度高、交易活跃的合约往往只有一个或者两个，因此在进行CTA回测之前我们便需要对所有品种所有的月份合约都选择出来，筛选出属于不同品种的主力合约来。进行CTA日内交易策略的回测。</p>
+<p>只暂时选取一些近两年来交易活跃程度较高、受市场关注度较高的期货品种</p>
+<p>我们这里也对回测时所用的主力合约的选择设定了一定的规则:</p>
+<ol>
+<li>同一时点同一品种的持仓量最高</li>
+<li>按日度收盘数据隔天判定，即T日收盘后的持仓情况决定T+1日的主力合约是否改变</li>
+<li>以连续5日持仓量最大的合约保持相同且需与前主力合约不同为准，否则主力合约不发生改变</li>
+</ol>
+<h3 id="回测框架搭建"><a href="#回测框架搭建" class="headerlink" title="回测框架搭建"></a>回测框架搭建</h3><ol>
+<li>主要参数初始化，包括但不限于期货品种、回测起止日期、杠杆比例、仓位大小、交易手续费、初始资金等等;</li>
+<li>根据CTA策略的具体内容生成信号;</li>
+<li>再依据生成的信号并结合当前账户资产的状态来决定买卖下单情况，并更新和记录交易信息;</li>
+<li>最后则对账户的历史信息进行一系列的指标评价，如年化收益率、最大回撤率、夏普比率和收益风险比等</li>
+</ol>
+<p>采用固定保证金比例为10%的方式，而为了防止爆仓或者其他引起保证金不足的现象发生，我们也并没有进行全仓操作，而是设定了一个最大使用仓位比例，该最大仓位比例固定为30%，因此可计算出我们所使用的杠杆比例固定为3倍。</p>
+<p>关于冲击成本和手续费，因为流动性问题导致的买卖价差成本在不同的期货品种上面具有一定差异，而且由于我们暂时选取的期货品种都是交易活跃、成交量较高的，所以可以在回测的时候统一设冲击成本为万分之二的固定比例，而手续费则设定为万分之零点三。</p>
+<h3 id="过滤条件的设定"><a href="#过滤条件的设定" class="headerlink" title="过滤条件的设定"></a>过滤条件的设定</h3><p>在不同的日内交易策略回测过程中，策略信号的触发条件不尽相同，但为了尽可能地<code>降低潜在的波动风险</code>，我们都进行了一些基本的回测信号过滤条件的设置。</p>
+<ol>
+<li><p>摒弃掉开盘后半小时的交易时间，从9点30分开始再开始开平仓的操作。同样地，在每个交易日收盘前的10-15分钟内，市场成交量常常较高，波动性风险也比较明显。所以，我们也尽量避免在盘尾的这段时间内进行操作。</p>
+</li>
+<li><p>除了过滤掉开盘后和收盘前的行情走势，有些情况下，策略生成的信号也往往会在比较靠近收盘的时间内触发产生。另外，从时间上来看，在下午开仓的话，由于持仓时间可能会过于短暂，此时的行情趋势会表现得不够明显，从而导致回测账户浮亏。所以，我们也选择过滤掉开仓时间在下午的策略信号。</p>
+</li>
+<li><p>因为我们主要进行回测的是日内交易策略，在每日收盘时是不留仓位的。但对于横盘震荡整理的行情来说，某些趋势性策略会多次触发信号生成条件，而如果交易次数过多的话，会不断地降低收益，而提高了当日交易成本占比。为了降低这种累积的交易成本，我们对每日的交易次数进行了限制。尽管这样的设定可能会降低潜在的趋势性收益，但较少的交易次数不仅能降低了交易成本占比，而且也保证了实际量化交易的可执行性。</p>
+</li>
+</ol>
+<h3 id="几点想法"><a href="#几点想法" class="headerlink" title="几点想法"></a>几点想法</h3><ol>
+<li><p>需要对<code>窄幅震荡</code>的行情进行过滤，因为如果价格的日内走势如果太过于平稳的话，实际上很难通过趋势交易进行赚钱，而一旦调低信号触发条件的话，此时容易触发多次信号，而这样的信号其实属于“噪声”，进行交易反而是<code>增加了交易成本</code>，因此应该过滤掉这些行情;</p>
+</li>
+<li><p>适当地调整二次进场的条件，因为对于宽幅震荡或者V型反转的行情来说，一旦一开始就被震荡出局的话，就会错过之后可能会获益的行情，所以应该增设二次甚至三次入场条件，但这种条件应适当苛刻，否则增多了交易次数反而不利;</p>
+</li>
+<li><p>需要等待，因为日内趋势并不是时时都能发生，一旦确定了判断趋势的条件就应该严格执行;</p>
+</li>
+<li><p>最最重要的就是止盈与止损，尽管我们在报告中回测所采用的是简单的固定比例止损止盈，但不管何种方式，止损止盈其实是为了能锁住当前的利益或收住损失，并待以更好的时机再次入场;(5)构建组合才能抵御潜在风险，低相关性的产品可以产生风险对冲的效果，使得整体的收益都变得更加平稳。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;数据准备&quot;&gt;&lt;a href=&quot;#数据准备&quot; class=&quot;headerlink&quot; title=&quot;数据准备&quot;&gt;&lt;/a&gt;数据准备&lt;/h3&gt;&lt;p&gt;对于不同的期货品种来说，受市场关注度高、交易活跃的合约往往只有一个或者两个，因此在进行CTA回测之前我们便需要对所有品种所有
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="CTA" scheme="http://yoursite.com/tags/CTA/"/>
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>期货市场概述</title>
+    <link href="http://yoursite.com/2017/01/02/%E6%9C%9F%E8%B4%A7%E5%B8%82%E5%9C%BA%E6%A6%82%E8%BF%B0/"/>
+    <id>http://yoursite.com/2017/01/02/期货市场概述/</id>
+    <published>2017-01-01T16:03:49.000Z</published>
+    <updated>2017-01-11T06:56:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>商品定价由风险偏好、货币资金因素和供需逻辑决定，分别是宏观视角和微观视角。</p>
+<ul>
+<li>宏观视角：从经济周期、政策周期分析风险偏好、货币资金和大类资产配置周期，典型如美林时钟。天气情况对农产品影响重大</li>
+<li>微观视角：各具体品种的供应和需求，物流和运输，成本和利润等，一般通过平衡表和季节性分析来进行分析</li>
+</ul>
+<p>从长期来看，供给端和需求端的因素共同决定了商品期货价格的趋势，而短期来看，众多投资者的不同心理预期引起了期货价格的波动 大部分的商品都是受上游的原材料的产量情况影响供给，而需求端则主要是 受下游企业的生产制造等消费量的影响。</p>
+<p>从短期内来看，不同品种的期货价格都是由相应品种现货的内部供需结构决定的，这包括各品种现货的库存量、进出口量、外盘相关期货价格走势、相应替代品价格变动以及政策面消息等各方面的影响。从中长期来看，期货价格还会受到每个品种在各自产业链的供给端(上游)、需求端(下游)等方面的影响</p>
+<p>对工业品而言，需求周期最关键，是决定价格的核心变量。这是由于工业品的生产相对稳定，可计划，而且随时可以增减，变动周期短，不确定性较小，所以价格影响小；需求则与经济周期和投资周期联系紧密，高度不确定，而且趋势性较好，持续时间长，对价格具有关键影响。</p>
+<p>农产品：供应周期最关键，决定价格的核心变量。农产品需求刚性，消费成长较为稳定，供应则具有高度不确定性，是价格波动的主要来源。此外，农产品供应有时间周期，产量不能按照计划恢复，所以，一旦出现供应不足，很难短时间内复产（与黑色等大为不同）。</p>
+<p><code>商品期货分类</code>：<br><img src="http://img.mp.itc.cn/upload/20170109/27d690d4cc4e4d07911ebb11c3abb245_th.jpeg" alt=""></p>
+<h3 id="1-能源化工：不可再生能源的开采及后续利用"><a href="#1-能源化工：不可再生能源的开采及后续利用" class="headerlink" title="1. 能源化工：不可再生能源的开采及后续利用"></a>1. 能源化工：不可再生能源的开采及后续利用</h3><ul>
+<li>以石油及天然气为原料生产化学工业制品的产业(燃料油，天然橡胶)</li>
+<li>以煤为原料并经过化学加工使煤转化为其他化学品的工业产业(动力煤，甲醇)</li>
+</ul>
+<p>特点：一方面石油、煤炭的开采和后续加工不会受到明显的季节性因素的制约，另一方面能源化工类商品交易需求较大 <br></p>
+<h3 id="2-黑色金属"><a href="#2-黑色金属" class="headerlink" title="2. 黑色金属"></a>2. 黑色金属</h3><p>黑色系期货主要是一般是指跟黑色金属——铁、铬、锰相关的一些商品期货，比如铁矿石、螺纹钢以及和钢铁冶炼关系密切的焦煤、焦炭。</p>
+<p>根据黑色系相关商品的特点来看，该产业链的上下游产品之间具有相比于其他产业更为紧密的关系，因此黑色系期货不同品种的价格之间也就表现出特别显著的强相关性。</p>
+<p>从黑色系产业的供给端来看，铁矿石和焦煤焦炭是生产钢材的两类重要原材料。我国作为世界上最大的铁矿石消费国，国内铁矿石产量已不足以满足当前经济发展的需求，所以也使得我国成为最大的铁矿石进口国。从成本管理的角度考虑，铁矿石期货的价格不仅仅会受到开采时人工、电费、设备等因素的影响，而且也会受到国际海运、关税等因素的影响。焦煤焦炭等一系列冶炼钢铁原材料的生产成本也同时对钢材期货的价格造成影响。从此之外，煤矿、铁矿的开采以及钢材的生产加工往往都会受到政府出台的钢铁煤炭产业政策的影响，如果政策性成本上升，势必会对相关产品的供给带来压力，从而造成期货价格的变化。</p>
+<p>从需求端来看，对黑色系期货价格影响最大的是宏观经济环境形势的变化。如果国民经济处于上升阶段，基础设施建设和房地产行业会刺激并拉动钢材或其他下游行业产品的需求，从而造成供不应求的局面，并在一定时期内使得相应商品期货的价格上涨;而如果经济处于下行，会造成钢材等产品库存量的增加，从而导致相应期货价格下跌。</p>
+<h3 id="3-有色金属"><a href="#3-有色金属" class="headerlink" title="3. 有色金属"></a>3. 有色金属</h3><p>有色金属是指除了黑色金属以外的其他金属，包括贵金属(黄金、白银等)以及一般金属(铜、铝、铅、锌、锡、镍等)</p>
+<p>有色金属中的黄金、白银属于贵金属，由于其所具有的化学稳定性以及稀有特殊性，使得黄金、白银从很早的时候就具备了流通货币、金融储备、价值衡量等属性。所以能够对黄金白银期货价格产生影响的主要因素是国际政治环境、经济形势的变化，这其中包括美元指数、PMI指数等相关的宏观指标。</p>
+<p>国内上期所的黄金期货价格也基本上与国际黄金期货市场上的价格走势保持一致。由于大多数有色金属价格在国际市场上是以美元标价，所以一般情况下，美元指数上涨会使得以美元计价的商品的价格下跌，而美元贬值时又会推动这些商品的价格上涨，它们与美元指数之间基本上保持比较明显的“此消彼长”的负相关关系(图9)。相比于其他金属，铜、铅、镍在2015年至今这段时间内的价格走势比较独立，表现出了与黄金期货较低的相关性，而且与美元指数的负相关性也比较低。</p>
+<p>由于有色金属相较于其他的期货品种具有较高的流动性，而且我国的有色金属矿产自给率普遍不足，从长期来看，国内市场在供给端和需求端会受到全球市场的影响，从而导致了国内的有色金属期货价格与国外对应品种的期货价格走势基本一致。从2015年至今的价格走势情况来看，黄金、白银、铜、铝、锌的内外盘的联动效应最明显，而国内铅的期货价格却表现出了与国外市场上不一样的走势</p>
+<h3 id="4-农产品"><a href="#4-农产品" class="headerlink" title="4. 农产品"></a>4. 农产品</h3><p>参考指数：南华农产品指数(NH0300)<br>农产品系期货是指和农业产业生产品相关的期货合约，包括粮食类期货、经济作物类期货等。</p>
+<p>整体来看，农产品的生产具有<code>严格的周期性和季节性</code>特点:</p>
+<ul>
+<li>每一种农产品从种植到收获都有其固定的周期长度，这就制约了农产品的供给，使得其呈现一定的周期性特点。</li>
+<li>在农产品的种植生产过程中，还会受到一个很重要的因素——天气情况的制约: 它们会对温度、光照、雨水等天气条件非常敏感，以至于稍微有一点的改变，就有可能对农产品的生产产生不利的影响，进而影响到农产品的供给量。</li>
+<li>在农产品生产过程中农机农药的使用，直接决定了相关农作物的生长情况。</li>
+</ul>
+<p>在分析农产品价格变动因素的时候，我们首先会需要考虑农产品的主产地的产量情况，因为主产地的产量基本决定了全球范围内农产品的供给情况。</p>
+<ul>
+<li>由于我国的人口众多，对一些农产品的需求旺盛，甚至仍然需要大量依赖于进口。因此同样需要知道不同农产品的自给率(当年产量/表观消费量)以及对外依存度(进口量/表观消费量)的情况</li>
+</ul>
+<p>粮食期货中的小麦、稻谷和玉米实际自给率比较高，更多地受到国内市场上供需状况的影响，而与国际市场上相关商品的价格联动关系也比较小，从2015年至今的数据分析结果显示小麦、稻谷和玉米与外盘相应品种的相关性基本为0</p>
+<p>大豆的主要用途之一是用来压榨制作豆油，而油菜籽是另一种油料作物，主要是用来压榨生产菜籽油。所以作为其替代品，油菜籽以及其他油料作物花生、棉籽的产量、价格及消费的变化也会间接地影响到大豆类、油菜籽类期货价格的走势。除了豆油和菜籽油之外，大豆和油菜籽的其他下游产品分别为豆粕和菜籽粕，它们的需求量变化也会直接影响到大豆、油菜籽的需求，从而反映到期货价格上面。经过计算，在2015年至今这段时间内这些油料期货之间具有较高的相关性，其中外盘CBOT豆油与国内豆油、菜籽油、棕榈油之间的相关性依次为0.691、0.662、0.895。所以，我们看到替代品受到的价格波动同样会影响其他同类的期货品种的价格。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;商品定价由风险偏好、货币资金因素和供需逻辑决定，分别是宏观视角和微观视角。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;宏观视角：从经济周期、政策周期分析风险偏好、货币资金和大类资产配置周期，典型如美林时钟。天气情况对农产品影响重大&lt;/li&gt;
+&lt;li&gt;微观视角：各具体品种的供应和需求，物流和
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多因子模型</title>
+    <link href="http://yoursite.com/2016/12/05/%E5%A4%9A%E5%9B%A0%E5%AD%90%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://yoursite.com/2016/12/05/多因子模型/</id>
+    <published>2016-12-05T15:25:37.000Z</published>
+    <updated>2017-01-10T05:55:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>股票的收益率可以被一组<code>共同因子</code>和一个仅与该股票有关的<code>特异因子</code>解释，即任何股票的收益率来自两个方面:共同(因子)部分，特异部分。<br><br>多因子模型通过对于共同(因子)部分的定量建模，将投资的聚焦点从<code>股票</code>转移至<code>因子</code>，即从原来的对<code>股票</code>的收益和风险管理，变成对于<code>因子</code>的收益和风险管理。</p>
+<h2 id="多因子模型投资目标："><a href="#多因子模型投资目标：" class="headerlink" title="多因子模型投资目标："></a>多因子模型投资目标：</h2><ol>
+<li>收益预测:形成合理并且有效的收益预期;</li>
+<li>风险控制:在谨慎的前提下捕捉市场机会;</li>
+<li>过程控制:监控整个投资过程以保持投资生产上的一致性; </li>
+<li>成本控制:避免过度或者无效率的交易侵蚀投资利润。</li>
+</ol>
+<h2 id="因子分类"><a href="#因子分类" class="headerlink" title="因子分类"></a>因子分类</h2><p>因子：any characteristic of a group of securities that is important in explaining their risk and returns.</p>
+<ol>
+<li>宏观因子：外部经济因素对股票市场的影响</li>
+<li>横截面因子：基本面和市场因子</li>
+<li>统计因子：通过收益数据提取</li>
+</ol>
+<h4 id="按逻辑将风险因子分为3类："><a href="#按逻辑将风险因子分为3类：" class="headerlink" title="按逻辑将风险因子分为3类："></a>按逻辑将风险因子分为3类：</h4><p>大类因子是指在逻辑上具有一定相似性的因子。在实证中这些因子之间也很有可能表现出很强的相关性，即共线性问题。</p>
+<p>为尽量多的保留有用信息，需要首先根据因子所属大类对其进行处理，比如进行因子合成，或者尽量挑选效果显著，并且相关性不高的因子集合进行保留;</p>
+<ol>
+<li>市场风险</li>
+<li>行业风险</li>
+<li>风格风险</li>
+</ol>
+<p>Value, Low Size, Low Volatility, High Dividend Yield, Quality and Momentum</p>
+<h2 id="Alpha"><a href="#Alpha" class="headerlink" title="Alpha"></a>Alpha</h2><p>Alpha 衡量的是经风险调整后的超额收益，收益中不能被风险因子解释部分。</p>
+<p>Alpha 的度量首先需要定量刻画风险，只有风险具备清晰的量化指标，进行收益的比较才是有意义的。</p>
+<p>一个不正确的模型会把对风险暴露的补偿错认为是alpha</p>
+<h2 id="多因子模型的假设"><a href="#多因子模型的假设" class="headerlink" title="多因子模型的假设"></a>多因子模型的假设</h2><ol>
+<li>特异收益率与因子收益率无关</li>
+</ol>
+<h2 id="多因子模型建模步骤"><a href="#多因子模型建模步骤" class="headerlink" title="多因子模型建模步骤"></a>多因子模型建模步骤</h2><h3 id="1-获取并清洗数据"><a href="#1-获取并清洗数据" class="headerlink" title="1. 获取并清洗数据"></a>1. 获取并清洗数据</h3><ul>
+<li>基础数据采集</li>
+<li>极值处理：中位数去极值法</li>
+<li>数据标准化</li>
+</ul>
+<h3 id="2-因子选择、测试和处理-注意行业和市值的影响"><a href="#2-因子选择、测试和处理-注意行业和市值的影响" class="headerlink" title="2. 因子选择、测试和处理(注意行业和市值的影响)"></a>2. 因子选择、测试和处理(注意行业和市值的影响)</h3><p>寻找因子的标准: </p>
+<ol>
+<li>有<code>逻辑意义</code>：在逻辑上应该和收益率存在一定的相关性</li>
+<li>有<code>统计显著性</code>：在实证上能够<code>有效区分个股</code>的因子<ul>
+<li>因子值对于个股未来收益有相关性</li>
+</ul>
+</li>
+</ol>
+<h4 id="A股市场分布规律"><a href="#A股市场分布规律" class="headerlink" title="A股市场分布规律"></a>A股市场分布规律</h4><p>观察因子在A股市场的<code>分布规律</code>，通过分析因子在不同行业及不同规模上市公司间的差异，判断在单因子回归测试中是否应该处理<code>行业、规模</code>因素的影响。</p>
+<ol>
+<li>行业间因子差异</li>
+<li>不同规模公司间因子差异</li>
+<li>各因子相关性(多重共线性的处理)</li>
+</ol>
+<h4 id="单因子回归"><a href="#单因子回归" class="headerlink" title="单因子回归"></a>单因子回归</h4><p>t值：被测单因子对模型的解释能力是否显著</p>
+<ol>
+<li><p>因子收益率序列𝑡检验：确定因子𝑘在第𝑡期是否和股票收益率显著相关</p>
+<ul>
+<li>𝑡值绝对值序列的均值</li>
+<li>𝑡值绝对值序列大于2的比例：避免出现少数数值特别大的样本值拉高均值</li>
+<li>因子收益率𝑓序列的方向一致性</li>
+</ul>
+</li>
+<li><p>根据回归后的t值，将因子分为有效和无效。有效因子又分为收益类因子和风险类因子</p>
+<ul>
+<li>根据因子收益率序列的t值将因子分为有效和无效</li>
+<li>根据因子收益率序列的方向一致性分为收益类和风险类因子</li>
+</ul>
+</li>
+</ol>
+<h4 id="IC值-下期收益率和本期因子暴露度的线性相关程度"><a href="#IC值-下期收益率和本期因子暴露度的线性相关程度" class="headerlink" title="IC值: 下期收益率和本期因子暴露度的线性相关程度"></a>IC值: 下期收益率和本期因子暴露度的线性相关程度</h4><p>在截面期上用其做因变量对市值因子及行业因子(哑变量)做线性回归，<code>取残差作为因子值的一个替代</code>。这样做可以消除行业因素和市值因素对因子的影响。</p>
+<ul>
+<li><p>相关性<br>计算在各个月份的因子值与次月收益率的相关系数。相关系数的绝对值越大，意味着因子预测预期收益率的能力越强。</p>
+</li>
+<li><p>显著程度<br>除了单纯计算相关性，我们还需要进行显著性检验来判断是否有样本间有<code>显著的</code>相关关系。<br>计算p值，若p值小于显著性水平，则拒绝零假设(相关性为零)</p>
+</li>
+</ul>
+<p>$$t^*=\frac{r\sqrt{n-2}}{\sqrt{1-r^2}}$$</p>
+<h4 id="区分和选股能力-按指标分组后的表现"><a href="#区分和选股能力-按指标分组后的表现" class="headerlink" title="区分和选股能力: 按指标分组后的表现"></a>区分和选股能力: 按指标分组后的表现</h4><p>从时间序列的角度观察各组的历史累计收益、信息比率、最大回撤以及胜率等</p>
+<h3 id="3-因子组合构建"><a href="#3-因子组合构建" class="headerlink" title="3. 因子组合构建"></a>3. 因子组合构建</h3><ul>
+<li>大类因子分析，共线性分析<ul>
+<li>因子取舍：经济含义不同的因子，存在明显相关性</li>
+<li>因子合成：经济含义类似的同类型因子，存在明显相关性</li>
+</ul>
+</li>
+<li>残差异方差分析<ul>
+<li>Breusch-Pagan test</li>
+<li>White test</li>
+<li>采用加权最小二乘法</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-因子回归"><a href="#4-因子回归" class="headerlink" title="4. 因子回归"></a>4. 因子回归</h3><ul>
+<li>估计因子暴露和每期的因子收益率序列</li>
+<li>估计因子预期收益<ul>
+<li>历史均值法</li>
+<li>指数加权移动平均法</li>
+<li>时间序列预测法</li>
+<li>滤波法提取趋势项</li>
+</ul>
+</li>
+<li>计算股票预期收益</li>
+</ul>
+<h3 id="5-计算协方差矩阵"><a href="#5-计算协方差矩阵" class="headerlink" title="5. 计算协方差矩阵"></a>5. 计算协方差矩阵</h3><p>组合的收益率可以分解为:</p>
+<ul>
+<li>业绩基准收益率</li>
+<li>主动收益率<ul>
+<li>因子主动收益率</li>
+<li>特定主动收益率<br>其中，因子主动收益率分为：</li>
+</ul>
+</li>
+<li>市场因子收益率; </li>
+<li>行业因子收益率; </li>
+<li>风格因子收益率。</li>
+</ul>
+<p>根据多元线性回归的结果，我们可以得到所有因子每期因子收益的历史序列值,根据𝑁期的历史数据计算出因子收益率之间的协方差矩阵</p>
+<h3 id="6-残差风险估计"><a href="#6-残差风险估计" class="headerlink" title="6. 残差风险估计"></a>6. 残差风险估计</h3><p>需要对于特异收益的方差进行建模</p>
+<h3 id="7-模型优化"><a href="#7-模型优化" class="headerlink" title="7. 模型优化"></a>7. 模型优化</h3><p>第𝑇+1期的股票预期收益、因子收益协方差矩阵、预期残差风险，都计算出来之后，关于股票的预期风险和收益的基础数据就全部得到了。接下来需要做的就是在这些数据的基础上，结合投资组合的<code>风险-收益</code>目标，以及各种约束条件，进行<code>股票选择</code>和<code>权重分配</code>。</p>
+<ul>
+<li>确定组合的收益目标: 可以是两种，一种是确定目标收益，然后最小化风险;另外一种是确定风险目标，然后最大化收益;</li>
+<li>确定组合的风险目标</li>
+<li>行业权重约束: 根据风险目标确定行业风险的暴露。如果组合存在基准组合，则需要根据基准组合在各个行业的权重分布，确定行业偏离约束;</li>
+<li>因子暴露约束: 多因子模型本身是一个追求宽度的模型，所以为避免在某些因子上暴露过大导致风险过高，需要对因子暴露进行一定的约束;</li>
+<li>个股上下限约束: 因为卖空约束以及避免在个股上暴露过高的风险，所以需要对个股权重的上下限进行约束;</li>
+<li>二次规划求解组合权重分配: 根据个股预期风险—收益数据集，以及上述约束条件，采用二次规划的方式，计算组合中的个股权重;</li>
+</ul>
+<h3 id="8-业绩归因"><a href="#8-业绩归因" class="headerlink" title="8. 业绩归因"></a>8. 业绩归因</h3><h4 id="收益归因方法"><a href="#收益归因方法" class="headerlink" title="收益归因方法"></a>收益归因方法</h4><p>将组合主动收益分解成系统部分以及残差部分</p>
+<h4 id="风险归因方法"><a href="#风险归因方法" class="headerlink" title="风险归因方法"></a>风险归因方法</h4><p>定义因子对主动风险的边际贡献</p>
+<p>按照多因子模型的大类风险划分:市场风险、行业风险、风格风险。对应的业绩归因模型将业绩归因到市场收益、行业收益、风格收益、特定收益四大类。</p>
+<hr>
+<h2 id="多因子选股中容易出现的问题"><a href="#多因子选股中容易出现的问题" class="headerlink" title="多因子选股中容易出现的问题"></a>多因子选股中容易出现的问题</h2><h3 id="因子极值问题"><a href="#因子极值问题" class="headerlink" title="因子极值问题"></a>因子极值问题</h3><h3 id="线性回归模型的假设"><a href="#线性回归模型的假设" class="headerlink" title="线性回归模型的假设"></a>线性回归模型的假设</h3><h4 id="1-回归模型是正确设定的"><a href="#1-回归模型是正确设定的" class="headerlink" title="1. 回归模型是正确设定的"></a>1. 回归模型是正确设定的</h4><ul>
+<li>模型选择了正确的变量</li>
+<li>模型选择了正确的函数形式</li>
+</ul>
+<h4 id="2-对解释变量的假设"><a href="#2-对解释变量的假设" class="headerlink" title="2. 对解释变量的假设"></a>2. 对解释变量的假设</h4><ul>
+<li>解释变量是确定性变量，不是随机变量</li>
+<li>解释变量具有<code>变异性</code>，随着样本容量的无限增加，样本方差趋于一个非零的有限常数</li>
+<li>解释变量之间是非随机固定的，且<code>各解释变量之间不存在严格线性相关性</code></li>
+</ul>
+<h4 id="3-对随机干扰项的假设"><a href="#3-对随机干扰项的假设" class="headerlink" title="3. 对随机干扰项的假设"></a>3. 对随机干扰项的假设</h4><ul>
+<li>零均值</li>
+<li>同方差</li>
+<li>序列相关性为零</li>
+<li>随机误差项与解释变量之间不相关</li>
+<li>随机误差项服从正态分布</li>
+</ul>
+<h3 id="Pearson相关系数的假设"><a href="#Pearson相关系数的假设" class="headerlink" title="Pearson相关系数的假设"></a>Pearson相关系数的假设</h3><ol>
+<li>Pearson相关系数要求样本点等距的抽样于正态分布<ul>
+<li>JB Test</li>
+</ul>
+</li>
+<li>Pearson相关系数衡量变量间的线性关系</li>
+</ol>
+<h3 id="行业和市值的影响"><a href="#行业和市值的影响" class="headerlink" title="行业和市值的影响"></a>行业和市值的影响</h3><p>行业中性</p>
+<h3 id="市场风格的切换-因子与收益率回归系数的正负号"><a href="#市场风格的切换-因子与收益率回归系数的正负号" class="headerlink" title="市场风格的切换(因子与收益率回归系数的正负号)"></a>市场风格的切换(因子与收益率回归系数的正负号)</h3><p>相关性同向显著次数占比越大，说明指标的显著性和趋势性越强; 而切换次数较多则意味着该指标所代表的市场风格经常发生转换，或者说风格持续的时间较短。这关系到因子模型的因子权重是否适合做动态调整。</p>
+<h3 id="某些因子在时间序列上的变动很大"><a href="#某些因子在时间序列上的变动很大" class="headerlink" title="某些因子在时间序列上的变动很大"></a>某些因子在时间序列上的变动很大</h3><p>在计算相关系数之前先在横截面上对因子进行标准化处理</p>
+<hr>
+<h2 id="多因子模型的风险"><a href="#多因子模型的风险" class="headerlink" title="多因子模型的风险"></a>多因子模型的风险</h2><h3 id="1-公共因子风险"><a href="#1-公共因子风险" class="headerlink" title="1. 公共因子风险"></a>1. 公共因子风险</h3><h3 id="2-因子协同风险"><a href="#2-因子协同风险" class="headerlink" title="2. 因子协同风险"></a>2. 因子协同风险</h3><p>因子值之间的相关系数，因子收益率之间的相关系数</p>
+<p>若因子的超额收益(相对市场等权指数)和收益单调性均不如某特定因子，说明该因子的超额收益来源并不能由其他因子完全解释，应该有其自身的超额收益来源。</p>
+<p>所以应该通过<code>因子分层</code>来剔除某一因子对组合收益率的影响</p>
+<h4 id="因子分层组合"><a href="#因子分层组合" class="headerlink" title="因子分层组合"></a>因子分层组合</h4><p>为了剔除因子F对组合收益率的影响，实现组合对因子F的中性，可以构建基于因子F的因子分层组合。方法如下:</p>
+<ol>
+<li>每月底按因子F大小将样本空间内的股票进行排序，均匀的分为10层;</li>
+<li>在每层股票中按特质波动率因子IVFF从小到大进行排序，取每层中的前1/10归为第1组、接下来1/10归为第2组，以此类推，共10组股票;</li>
+<li>每组股票按等权方法构建组合。</li>
+</ol>
+<p>因子F的分层组合中每组股票因子F的水平大致相当，<code>剔除了因子F对各组收益的影响</code>，各组股票的表现差异可以视为剔除因子F影响后, 剩余因子对超额收益的剩余贡献，通过比较分层前后各分组组合的业绩变化，可以大致判断因子F对超额收益的贡献大小。</p>
+<h3 id="3-股票特异风险"><a href="#3-股票特异风险" class="headerlink" title="3. 股票特异风险"></a>3. 股票特异风险</h3>]]></content>
+    
+    <summary type="html">
+    
+      多因子模型定量刻画了股票预期收益率与股票在每个因子上的因子载荷(风险敞口)，以及每个因子每单位因子载荷(风险敞口)的因子收益率之间的线性关系。
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+      <category term="MFM" scheme="http://yoursite.com/tags/MFM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pandas基本操作</title>
+    <link href="http://yoursite.com/2016/11/20/pandas%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2016/11/20/pandas基本操作/</id>
+    <published>2016-11-20T15:29:01.000Z</published>
+    <updated>2016-11-26T21:53:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Simple-function"><a href="#Simple-function" class="headerlink" title="Simple function"></a>Simple function</h2><h3 id="Real-Copy"><a href="#Real-Copy" class="headerlink" title="Real Copy"></a>Real Copy</h3><p>Copy the value, not the whole object<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">a=pd.DataFrame(np.random.randint(<span class="number">5</span>,size = <span class="number">5</span>), index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</div><div class="line">b=a.copy(Deep=<span class="keyword">True</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="Boolean-Reductions"><a href="#Boolean-Reductions" class="headerlink" title="Boolean Reductions"></a>Boolean Reductions</h3><p>You can apply the reductions: empty, any(), all(), and bool() to provide a way to summarize a boolean result.<br><figure class="highlight css"><table><tr><td class="code"><pre><div class="line">(<span class="selector-tag">df</span> &gt; 0)<span class="selector-class">.any</span>()</div><div class="line">(<span class="selector-tag">df</span> &gt; 0)<span class="selector-class">.all</span>()</div><div class="line">(<span class="selector-tag">df</span>+<span class="selector-tag">df</span>)<span class="selector-class">.equals</span>(<span class="selector-tag">df</span>*2)</div></pre></td></tr></table></figure></p>
+<h3 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h3><p>You can select specific percentiles to include in the output:<br><code>series.describe(percentiles=[.05, .25, .75, .95])</code></p>
+<h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><p>The <code>idxmin()</code> and <code>idxmax()</code> functions on Series and DataFrame compute the index labels with the minimum and maximum corresponding values:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">df1.idxmin(axis=<span class="number">0</span>)</div><div class="line">df1.idxmin(axis=<span class="number">1</span>)</div></pre></td></tr></table></figure></p>
+<p>When there are multiple rows (or columns) matching the minimum or maximum value, idxmin() and idxmax() return the <code>first matching index</code>.</p>
+<p>Note <code>idxmin</code> and <code>idxmax</code> are called <code>argmin</code> and <code>argmax</code> in NumPy.</p>
+<h3 id="Value-counts-histogramming-Mode"><a href="#Value-counts-histogramming-Mode" class="headerlink" title="Value counts (histogramming) / Mode"></a>Value counts (histogramming) / Mode</h3><p>The <code>value_counts()</code> Series method and top-level function computes a histogram of a 1D array of values. It can also be used as a function on regular arrays:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">data = np.random.randint(<span class="number">0</span>, <span class="number">7</span>, size=<span class="number">50</span>)</div><div class="line">s = pd.Series(data)</div><div class="line">s.value_counts()</div><div class="line">pd.value_counts(data)</div></pre></td></tr></table></figure></p>
+<h2 id="Function-application"><a href="#Function-application" class="headerlink" title="Function application"></a>Function application</h2><ol>
+<li>Tablewise Function Application: <code>pipe()</code></li>
+<li>Row or Column-wise Function Application: <code>apply()</code></li>
+<li>Elementwise function application: <code>applymap()</code></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># apply</span></div><div class="line">In [<span class="number">146</span>]: tsdf = pd.DataFrame(np.random.randn(<span class="number">1000</span>, <span class="number">3</span>), columns=[<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>],</div><div class="line">   .....:                     index=pd.date_range(<span class="string">'1/1/2000'</span>, periods=<span class="number">1000</span>))</div><div class="line">   .....: </div><div class="line"></div><div class="line">In [<span class="number">147</span>]: tsdf.apply(<span class="keyword">lambda</span> x: x.idxmax())</div><div class="line">Out[<span class="number">147</span>]: </div><div class="line">A   <span class="number">2001</span><span class="number">-04</span><span class="number">-27</span></div><div class="line">B   <span class="number">2002</span><span class="number">-06</span><span class="number">-02</span></div><div class="line">C   <span class="number">2000</span><span class="number">-04</span><span class="number">-02</span></div><div class="line">dtype: datetime64[ns]</div><div class="line"></div><div class="line"><span class="comment"># apply with row </span></div><div class="line">df.apply(np.mean, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># applymap</span></div><div class="line">In [<span class="number">152</span>]: df4[<span class="string">'one'</span>].map(f)</div><div class="line">Out[<span class="number">152</span>]: </div><div class="line">a    <span class="number">14</span></div><div class="line">b    <span class="number">15</span></div><div class="line">c    <span class="number">15</span></div><div class="line">d     <span class="number">3</span></div><div class="line">Name: one, dtype: int64</div><div class="line"></div><div class="line">In [<span class="number">153</span>]: df4.applymap(f)</div><div class="line">Out[<span class="number">153</span>]: </div><div class="line">   one  three  two</div><div class="line">a   <span class="number">14</span>      <span class="number">3</span>   <span class="number">15</span></div><div class="line">b   <span class="number">15</span>     <span class="number">15</span>   <span class="number">11</span></div><div class="line">c   <span class="number">15</span>     <span class="number">14</span>   <span class="number">15</span></div><div class="line">d    <span class="number">3</span>     <span class="number">13</span>   <span class="number">14</span></div></pre></td></tr></table></figure>
+<h3 id="Align"><a href="#Align" class="headerlink" title="Align"></a>Align</h3><p>The align() method is the fastest way to simultaneously align two objects. It supports a join argument (related to joining and merging):</p>
+<ul>
+<li><code>join=&#39;outer&#39;</code>: take the union of the indexes (default)</li>
+<li><code>join=&#39;left&#39;</code>: use the calling object’s index</li>
+<li><code>join=&#39;right&#39;</code>: use the passed object’s index</li>
+<li><code>join=&#39;inner&#39;</code>: intersect the indexes</li>
+</ul>
+<h3 id="Iteration"><a href="#Iteration" class="headerlink" title="Iteration"></a>Iteration</h3><p>basic iteration (for i in object) produces:</p>
+<ul>
+<li>Series: values</li>
+<li>DataFrame: column labels    <figure class="highlight python"><table><tr><td class="code"><pre><div class="line">df = pd.DataFrame(&#123;<span class="string">'col1'</span> : np.random.randn(<span class="number">3</span>), <span class="string">'col2'</span> : np.random.randn(<span class="number">3</span>)&#125;,</div><div class="line">                  index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>])</div><div class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df:</div><div class="line">    print(col)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>To iterate over the rows of a DataFrame, you can use the following methods:</p>
+<ul>
+<li><code>iterrows()</code>: Iterate over the rows of a DataFrame as (index, Series) pairs. This converts the rows to Series objects, which can change the dtypes and has some performance implications.</li>
+<li><code>itertuples()</code>: Iterate over the rows of a DataFrame as namedtuples of the values. This is a lot faster than <code>iterrows()</code>, and is in most cases preferable to use to iterate over the values of a DataFrame.</li>
+</ul>
+<p><code>Warning</code>: You should never modify something you are iterating over. This is not guaranteed to work in all cases. </p>
+<h4 id="Compare"><a href="#Compare" class="headerlink" title="Compare"></a>Compare</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">t = pd.DataFrame(&#123;<span class="string">'a'</span>: range(<span class="number">0</span>, <span class="number">10000</span>), <span class="string">'b'</span>: range(<span class="number">10000</span>, <span class="number">20000</span>)&#125;)</div><div class="line">B = []</div><div class="line">C = []</div><div class="line">A = time.time()</div><div class="line"><span class="keyword">for</span> i,r <span class="keyword">in</span> t.iterrows():</div><div class="line">    C.append((r[<span class="string">'a'</span>], r[<span class="string">'b'</span>]))</div><div class="line">B.append(time.time()-A)</div><div class="line"></div><div class="line">C = []</div><div class="line">A = time.time()</div><div class="line"><span class="keyword">for</span> ir <span class="keyword">in</span> t.itertuples():</div><div class="line">    C.append((ir[<span class="number">1</span>], ir[<span class="number">2</span>]))    </div><div class="line">B.append(time.time()-A)</div><div class="line"></div><div class="line">C = []</div><div class="line">A = time.time()</div><div class="line"><span class="keyword">for</span> r <span class="keyword">in</span> zip(t[<span class="string">'a'</span>], t[<span class="string">'b'</span>]):</div><div class="line">    C.append((r[<span class="number">0</span>], r[<span class="number">1</span>]))</div><div class="line">B.append(time.time()-A)</div><div class="line"></div><div class="line"><span class="keyword">print</span> B</div><div class="line"></div><div class="line"><span class="comment"># [0.5639059543609619, 0.017839908599853516, 0.005645036697387695]</span></div></pre></td></tr></table></figure>
+<h3 id="Sorting"><a href="#Sorting" class="headerlink" title="Sorting"></a>Sorting</h3><h4 id="By-index"><a href="#By-index" class="headerlink" title="By index"></a>By index</h4><p><code>unsorted_df.sort_index(ascending=False, axis=1)</code></p>
+<h4 id="By-value"><a href="#By-value" class="headerlink" title="By value"></a>By value</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">df1.sort_values(by=<span class="string">'col_name'</span>)</div><div class="line"></div><div class="line">df1.nsmallest(<span class="number">3</span>)</div><div class="line">df1.nlargest(<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<h3 id="Output-format"><a href="#Output-format" class="headerlink" title="Output format"></a>Output format</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">pd.options.display.float_format = <span class="string">'&#123;:.2%&#125;'</span>.format</div><div class="line">pd.reset_option(<span class="string">'display.float_format'</span>)</div><div class="line"></div><div class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</div><div class="line"><span class="keyword">with</span> pd.option_context(<span class="string">'display.float_format'</span> ,<span class="string">'&#123;:.2%&#125;'</span>.format):</div><div class="line">    display(b)</div><div class="line"></div><div class="line">print(b.to_string(float_format = <span class="keyword">lambda</span> x: <span class="string">'&#123;:.2%&#125;'</span>.format(x)))</div></pre></td></tr></table></figure>
+<h1 id="setup-font"><a href="#setup-font" class="headerlink" title="setup font:"></a>setup font:</h1><p>/usr/local/lib/python3.5/site-packages/matplotlib/mpl-data/fonts/ttf</p>
+]]></content>
+    
+    <summary type="html">
+    
+      pandas中的一些基本操作整理(我不熟悉的。。)
+    
+    </summary>
+    
+      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="pandas" scheme="http://yoursite.com/tags/pandas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pandas中的时间处理</title>
+    <link href="http://yoursite.com/2016/11/20/pandas%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2016/11/20/pandas中的时间处理/</id>
+    <published>2016-11-20T09:25:44.000Z</published>
+    <updated>2016-11-21T05:32:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Create-datetime-as-index-in-pandas"><a href="#Create-datetime-as-index-in-pandas" class="headerlink" title="Create datetime as index in pandas"></a>Create datetime as index in pandas</h2><h3 id="read-and-use-dates-as-index"><a href="#read-and-use-dates-as-index" class="headerlink" title="read and use dates as index"></a>read and use dates as index</h3><p><code>pd.read_csv(&#39;hs300.csv&#39;,index_col=&#39;date&#39;,parse_dates=True,thousands=&#39;,&#39;,dtype={&#39;price&#39;:np.float64})</code></p>
+<h3 id="Generating-Ranges-of-Timestamps"><a href="#Generating-Ranges-of-Timestamps" class="headerlink" title="Generating Ranges of Timestamps"></a>Generating Ranges of Timestamps</h3><ol>
+<li>calendar day: date_range </li>
+<li>business day: bdate_range</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><div class="line"><span class="built_in">from</span> datetime import datetime</div><div class="line"><span class="built_in">start</span> = datetime(<span class="number">2011</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line"><span class="function"><span class="keyword">end</span>   = <span class="title">datetime</span>(<span class="title">2012</span>, <span class="title">1</span>, <span class="title">1</span>)</span></div><div class="line">ts = pd.date_range(<span class="built_in">start</span>, <span class="keyword">end</span>, freq=<span class="string">'B'</span>)</div></pre></td></tr></table></figure>
+<p><img src="https://github.com/fushuyue/DeepLearning/blob/master/pic/pandas.png?raw=true" width="50%" height="50%"></p>
+<h3 id="Convert"><a href="#Convert" class="headerlink" title="Convert"></a>Convert</h3><p>To convert a Series or list-like object of date-like objects e.g. strings, epochs, use the <code>to_datetime</code> function</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">pd.to_datetime(pd.Series([<span class="string">'Jul 31, 2009'</span>, <span class="string">'2010-01-10'</span>, <span class="keyword">None</span>]))</div></pre></td></tr></table></figure>
+<h2 id="Indexing-with-datetime-in-pandas"><a href="#Indexing-with-datetime-in-pandas" class="headerlink" title="Indexing with datetime in pandas"></a>Indexing with datetime in pandas</h2><h3 id="Indexing"><a href="#Indexing" class="headerlink" title="Indexing"></a>Indexing</h3><p>To provide convenience for accessing longer time series, can pass in the year or year and month as strings:</p>
+<ul>
+<li>select all data in year 2011: <code>ts[&#39;2011&#39;]</code></li>
+<li>select all data in year 2011/06: <code>ts[&#39;2011-6&#39;]</code></li>
+<li>select all data from 2013/01 to 2013/02: <code>dft[&#39;2013-1&#39;:&#39;2013-2&#39;]</code></li>
+<li>select from 2013/1/1 10:12:00: <code>dft[datetime(2013, 1, 1, 10, 12, 0):datetime(2013, 2, 28, 10, 12, 0)]</code></li>
+</ul>
+<p>A truncate convenience function is provided that is equivalent to slicing:<br>ts.truncate(before=’10/31/2011’, after=’12/31/2011’)</p>
+<h3 id="dateoffset"><a href="#dateoffset" class="headerlink" title="dateoffset"></a>dateoffset</h3><figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">from datetime import datetime</div><div class="line">from pandas.tseries.offsets import *</div><div class="line">d = datetime(<span class="number">2008</span>, <span class="number">8</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">0</span>)</div><div class="line"></div><div class="line"># plus <span class="number">4</span> month <span class="number">5</span> days</div><div class="line">d + DateOffset(months=<span class="number">4</span>, days=<span class="number">5</span>)</div><div class="line"></div><div class="line"># plus one week</div><div class="line">d + Week()</div></pre></td></tr></table></figure>
+<h2 id="Time-series-related-instance-methods¶"><a href="#Time-series-related-instance-methods¶" class="headerlink" title="Time series-related instance methods¶"></a>Time series-related instance methods¶</h2><h3 id="Shifting-lagging"><a href="#Shifting-lagging" class="headerlink" title="Shifting / lagging"></a>Shifting / lagging</h3><p>Shifting without realign of the data: <code>ts.shift(5, freq=&#39;BM&#39;)</code></p>
+<h3 id="Resampling"><a href="#Resampling" class="headerlink" title="Resampling"></a>Resampling</h3><p><code>.resample()</code> is a time-based groupby, followed by a reduction method on each of its groups.<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line">start = datetime(<span class="number">2011</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">end   = datetime(<span class="number">2011</span>, <span class="number">3</span>, <span class="number">15</span>)</div><div class="line">ts = pd.date_range(start, end, freq=<span class="string">'B'</span>)</div><div class="line">ts = pd.DataFrame(list(range(len(ts))),index=ts)</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">the how parameter by name, </div><div class="line">including `sum, mean, std, sem, max, min, median, first, last, ohlc`.</div><div class="line">'''</div><div class="line"></div><div class="line">ts.resample(<span class="string">'M'</span>).mean()</div></pre></td></tr></table></figure></p>
+<h3 id="Window-Function"><a href="#Window-Function" class="headerlink" title="Window Function"></a>Window Function</h3><p>For working with data, a number of windows functions are provided for computing common window or rolling statistics.<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = pd.Series(np.random.randn(<span class="number">1000</span>), index=pd.date_range(<span class="string">'1/1/2000'</span>, periods=<span class="number">1000</span>))</div><div class="line">r = s.rolling(window=<span class="number">60</span>)</div><div class="line"></div><div class="line">s.plot(style=<span class="string">'k--'</span>)</div><div class="line">r.mean().plot(style=<span class="string">'k'</span>)</div></pre></td></tr></table></figure></p>
+<p>The apply() function takes an extra func argument and performs generic rolling computations.<br>The func argument should be a single function that produces a single value from an ndarray input. </p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">mad = lambda x: np.fabs(x - x.mean()).mean()</div><div class="line">s.rolling(window=60).apply(mad).plot(style='k')</div></pre></td></tr></table></figure>
+<h3 id="Difference-of-resampling-and-window-function"><a href="#Difference-of-resampling-and-window-function" class="headerlink" title="Difference of resampling and window function"></a>Difference of resampling and window function</h3><p>They both operate and perform reductive operations on time-indexed pandas objects.<br>When using .rolling() with an offset. The offset is a time-delta. You will get <code>a same sized result</code> as the input.</p>
+<p>When using .resample() with an offset. Construct a <code>new index</code> that is the frequency of the offset. </p>
+<p>To summarize, .rolling() is a time-based window operation, while .resample() is a frequency-based window operation.</p>
+<h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><p>A single group can be selected using GroupBy.get_group():<br><code>grouped.get_group(&#39;bar&#39;)</code></p>
+<p>With grouped Series you can also pass a list or dict of functions to do aggregation with, outputting a DataFrame:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">grouped = df.groupby(<span class="string">'A'</span>)</div><div class="line">grouped[<span class="string">'C'</span>].agg([np.sum, np.mean, np.std])</div><div class="line">grouped[<span class="string">'D'</span>].agg(&#123;<span class="string">'result1'</span> : np.sum,</div><div class="line">                  <span class="string">'result2'</span> : np.mean&#125;)</div><div class="line">grouped.agg(&#123;<span class="string">'C'</span> : np.sum,</div><div class="line">             <span class="string">'D'</span> : <span class="keyword">lambda</span> x: np.std(x, ddof=<span class="number">1</span>)&#125;)</div></pre></td></tr></table></figure></p>
+<h4 id="The-filter-method-returns-a-subset-of-the-original-object"><a href="#The-filter-method-returns-a-subset-of-the-original-object" class="headerlink" title="The filter method returns a subset of the original object."></a>The filter method returns a subset of the original object.</h4><p>Suppose we want to take only elements that belong to groups with a group sum greater than 2.<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">sf = pd.Series([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</div><div class="line">sf.groupby(sf).filter(<span class="keyword">lambda</span> x: x.sum() &gt; <span class="number">2</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="Apply"><a href="#Apply" class="headerlink" title="Apply"></a>Apply</h4><p>Some operations on the grouped data might not fit into either the aggregate or transform categories.<br><code>grouped[&#39;C&#39;].apply(lambda x: x.describe())</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      对pandas中时间处理的整理
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="pandas" scheme="http://yoursite.com/tags/pandas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>各类机器学习应用</title>
+    <link href="http://yoursite.com/2016/11/19/%E5%90%84%E7%B1%BB%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8/"/>
+    <id>http://yoursite.com/2016/11/19/各类机器学习应用/</id>
+    <published>2016-11-19T13:05:03.000Z</published>
+    <updated>2016-11-20T03:06:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>###Decision tree<br>CART algorithm with gini information<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">%matplotlib inline </div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> chainer</div><div class="line"><span class="keyword">import</span> sklearn</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> cross_val_score</div><div class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</div><div class="line">mpl.style.use(<span class="string">'ggplot'</span>)</div><div class="line"></div><div class="line"><span class="comment"># download data from chainer </span></div><div class="line">train, test = chainer.datasets.get_mnist()</div><div class="line">train_indices, test_indices = np.random.permutation(len(train)), np.random.permutation(len(test))</div><div class="line">x_train, y_train  = [train[x][<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> train_indices], [train[x][<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> train_indices]</div><div class="line">x_test, y_test  = [test[x][<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> test_indices], [test[x][<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> test_indices]</div><div class="line"></div><div class="line">clf = DecisionTreeClassifier()</div><div class="line">t1 = time.time()</div><div class="line">clf.fit(x_train, y_train)</div><div class="line">t2 = time.time()</div><div class="line">print(t2 - t1)</div><div class="line">print(<span class="string">"final test accuracy is &#123;0:.3f&#125;"</span>.format(clf.score(x_test,y_test)))</div><div class="line"><span class="comment"># Time used: 28.99</span></div><div class="line"><span class="comment"># Accuracy : 0.879</span></div></pre></td></tr></table></figure></p>
+<h3 id="Support-vector-machines"><a href="#Support-vector-machines" class="headerlink" title="Support vector machines"></a>Support vector machines</h3><p>The points closest to the separating hyperplane are known as support vectors.<br>What SVM trying to do is to maximize the distance from the separating line to the support vectors, and find a way to optimize it.<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>, C=<span class="number">1</span>)</div><div class="line">t1 = time.time()</div><div class="line">clf.fit(x_train, y_train)</div><div class="line">t2 = time.time()</div><div class="line">print(t2 - t1)</div><div class="line">print(<span class="string">"final test accuracy is &#123;0:.3f&#125;"</span>.format(clf.score(x_test,y_test)))</div><div class="line"><span class="comment"># Time used: 391.18</span></div><div class="line"><span class="comment"># Accuracy : 0.940</span></div><div class="line"></div><div class="line"><span class="comment"># with 'rbf' kernal, the output is </span></div><div class="line"><span class="comment">#565.1520459651947</span></div></pre></td></tr></table></figure></p>
+<p>#final test accuracy is 0.945</p>
+<h3 id="random-forest"><a href="#random-forest" class="headerlink" title="random forest"></a>random forest</h3><p>ln random forests, each tree in the ensemble is built from a sample drawn with replacement from the training set. </p>
+<p>In addition, the split that is picked is the best split among a <code>random subset</code> of the features. As a result of this randomness, the bias of the forest usually slightly increases (with respect to the bias of a single non-random tree) but, due to averaging, its variance also decreases, usually more than compensating for the increase in bias, hence yielding an overall better model.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</div><div class="line">clf = RandomForestClassifier(n_estimators=<span class="number">50</span>,n_jobs=<span class="number">-1</span>)</div><div class="line">t1 = time.time()</div><div class="line">clf.fit(x_train, y_train)</div><div class="line">t2 = time.time()</div><div class="line">print(t2 - t1)</div><div class="line">print(<span class="string">"final test accuracy is &#123;0:.3f&#125;"</span>.format(clf.score(x_test,y_test)))</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">6.231855154037476</div><div class="line">final test accuracy is 0.966</div><div class="line">'''</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      使用SVM, Decision tree 和 random forest模型学习CIFAR10
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Adaboost算法</title>
+    <link href="http://yoursite.com/2016/11/17/Adaboost%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2016/11/17/Adaboost算法/</id>
+    <published>2016-11-17T15:57:03.000Z</published>
+    <updated>2016-11-18T05:59:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Adaboost-fit-a-sequence-of-weak-learners-on-repeatedly-modified-versions-of-the-data"><a href="#Adaboost-fit-a-sequence-of-weak-learners-on-repeatedly-modified-versions-of-the-data" class="headerlink" title="Adaboost: fit a sequence of weak learners on repeatedly modified versions of the data"></a>Adaboost: fit a sequence of weak learners on repeatedly modified versions of the data</h3><p>A <code>weight</code> is applied to every example in the training data. Initially, these weights are all equal. </p>
+<p>A weak classifier is first trained on the training data. The errors from the weak classifier are calculated, and the weak classifier is trained a second time with the same dataset. </p>
+<p>This second time the weak classifier is trained, the weights of the training set are <code>adjusted</code> so the examples properly classified the first time are weighted <code>less</code> and the examples incorrectly classified in the first iteration are weighted <code>more</code>. </p>
+<p>To get one answer from all of these weak classifiers, AdaBoost assigns <code>alpha</code> values to each of the classifiers. The values are based on the error of each weak classifier.</p>
+<p><code>error = number of incorrectly classified examples/total number of examples</code></p>
+<p><code>alpha = ln((1-error)/error)/2</code></p>
+<p><img src="http://img.blog.csdn.net/20130713163925921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3VvcXU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>After you calculate  , you can update the weight vector D so that the examples that are correctly classified will decrease in weight and the misclassified examples will increase in weight.</p>
+<p>After D is calculated, AdaBoost starts on the next iteration. The AdaBoost algorithm repeats the training and weight-adjusting iterations until the training error is 0 or until the number of weak classifiers reaches a user-defined value.</p>
+<h4 id="Implementation-on-sklearn"><a href="#Implementation-on-sklearn" class="headerlink" title="Implementation on sklearn"></a>Implementation on sklearn</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">sklearn.ensemble.AdaBoostClassifier()</div><div class="line"><span class="comment"># parameters:</span></div><div class="line">base_estimator : object, optional (default=DecisionTreeClassifier)</div><div class="line">n_estimators : integer, optional (default=<span class="number">50</span>)</div><div class="line">learning_rate : float, optional (default=<span class="number">1.</span>) <span class="comment"># shrinks the contribution of each classifier</span></div><div class="line">algorithm : &#123;‘SAMME’, ‘SAMME.R’&#125;, optional (default=’SAMME.R’)</div><div class="line"></div><div class="line"><span class="comment"># A simple example</span></div><div class="line"><span class="keyword">import</span> sklearn</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> cross_val_score</div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</div><div class="line"></div><div class="line">iris = load_iris()</div><div class="line">clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>)</div><div class="line">scores = cross_val_score(clf, iris.data, iris.target)</div><div class="line">scores</div></pre></td></tr></table></figure>
+<p>Note: <code>SAMME.R</code> uses the probability estimates to update the additive model, while <code>SAMME</code> uses the classifications only. The <code>SAMME.R</code> algorithm typically converges faster than <code>SAMME</code>, achieving a lower test error with fewer boosting iterations. </p>
+<p>CIFAR10 example:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">%matplotlib inline </div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> ji</div><div class="line"><span class="keyword">import</span> sklearn</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> cross_val_score</div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</div><div class="line">mpl.style.use(<span class="string">'ggplot'</span>)</div><div class="line"></div><div class="line"><span class="string">'''download data from chainer </span></div><div class="line">   The origin dataset is too large, </div><div class="line">   only train a subset of the dataset'''</div><div class="line"></div><div class="line">train, test = chainer.datasets.get_mnist()</div><div class="line">train_indices, test_indices = np.random.permutation(<span class="number">50000</span>), np.random.permutation(<span class="number">5000</span>)</div><div class="line">x_train, y_train  = [train[x][<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> train_indices], [train[x][<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> train_indices]</div><div class="line">x_test, y_test  = [test[x][<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> test_indices], [test[x][<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> test_indices]</div><div class="line"></div><div class="line"><span class="comment"># use sklearn Adaboost</span></div><div class="line">clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>,learning_rate=<span class="number">1.</span>)</div><div class="line">t1 = time.time()</div><div class="line">clf.fit(x_train, y_train)</div><div class="line">t2 = time.time()</div><div class="line">print(<span class="string">"training time = &#123;0:.3f&#125;"</span>.format(t2 - t1))</div><div class="line"><span class="comment"># output: training time 73.68</span></div><div class="line"></div><div class="line"><span class="comment"># plot the test error during training</span></div><div class="line">errors = []</div><div class="line"><span class="keyword">for</span> real <span class="keyword">in</span> clf.staged_predict(x_test):</div><div class="line">    errors.append(<span class="number">1.</span> - accuracy_score(real, y_test))</div><div class="line"></div><div class="line">plt.plot(errors)</div><div class="line">plt.suptitle(<span class="string">"Errors"</span>)</div><div class="line">plt.show()</div><div class="line">print(<span class="string">"final test accuracy is &#123;0:.3f&#125;"</span>.format(clf.score(x_test,y_test)))</div><div class="line"><span class="comment"># output: final test accuracy is 0.700</span></div></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/fushuyue/DeepLearning/blob/master/pic/adaboost.png?raw=true" alt="png"></p>
+<p><a href="http://scikit-learn.org/stable/modules/ensemble.html#adaboost" target="_blank" rel="external">sklearn:Adaboost</a><br><a href="http://scikit-learn.org/stable/auto_examples/ensemble/plot_adaboost_multiclass.html#sphx-glr-auto-examples-ensemble-plot-adaboost-multiclass-py" target="_blank" rel="external">Adaboost Example</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      python实现机器学习算法系列。利用Adaboost算法强化弱分类器，并应用于CIFAR10
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Adaboost" scheme="http://yoursite.com/tags/Adaboost/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LSTM模型动作识别</title>
+    <link href="http://yoursite.com/2016/11/14/LSTM%E6%A8%A1%E5%9E%8B%E5%8A%A8%E4%BD%9C%E8%AF%86%E5%88%AB/"/>
+    <id>http://yoursite.com/2016/11/14/LSTM模型动作识别/</id>
+    <published>2016-11-14T13:16:27.000Z</published>
+    <updated>2016-11-15T03:21:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>After extracting deep hierarchical visual feature from each frame of the videos by using a deep convolution neural network, fed these sequency of frame features into a LSTM model so that the model can learn temporal dynamics from the time-varying inputs.</p>
+<h3 id="Architechure"><a href="#Architechure" class="headerlink" title="Architechure"></a>Architechure</h3><p>The architecture of the LSTM model is like <code>LSTM -&gt; Hidden layer -&gt; Output layer</code>.<br>Dropout and interlayer batch normalization is used for each layer other than output layer.<br>The hyperparameters I set for the model is the following:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">parser = argparse.ArgumentParser(description=<span class="string">'Train LSTM with Chainer'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--batchsize'</span>, <span class="string">'-b'</span>, type=int, default=<span class="number">384</span>        , help=<span class="string">'Mini-batch size'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--epoch'</span>    , <span class="string">'-e'</span>, type=int, default=<span class="number">25</span>         , help=<span class="string">'Number of epoch to train'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--drop'</span>     , <span class="string">'-d'</span>, type=int, default=<span class="number">0.5</span>        , help=<span class="string">'dropout rate'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--method'</span>   , <span class="string">'-m'</span>, type=str, default=<span class="string">'Momentum'</span> , help=<span class="string">'Optimization methods'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--regular'</span>  , <span class="string">'-r'</span>, type=str, default=<span class="string">'Clip'</span>     , help=<span class="string">'Regularization methods'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--length'</span>   , <span class="string">'-l'</span>, type=int, default=<span class="number">120</span>        , help=<span class="string">'Length of sequence'</span>)</div><div class="line"></div><div class="line">parser.add_argument(<span class="string">'--trunc'</span>    , <span class="string">'-t'</span>, type=int, default=<span class="number">30</span>         , help=<span class="string">'Truncated Back Propagation'</span>)</div><div class="line"></div><div class="line">praser.add_argument(<span class="string">'--stride'</span>   , <span class="string">'-r'</span>, type=int, default=<span class="number">1</span>          , help=<span class="string">'the stride for inference'</span>)</div><div class="line">args = parser.parse_args()</div></pre></td></tr></table></figure></p>
+<p>By using all the defalut setting, And the result I get is <code>1.40  Accuracy: (0.653,0.884,0.938) 180</code>, which improves about 4% compared to CNN model <code>Accuracy(1,5,10): (0.613,0.865,0.923)</code> .</p>
+<p>Classes with highest improvement<br><figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">Shotput</span>              33<span class="selector-class">.864734</span></div><div class="line"><span class="selector-tag">Haircut</span>              33<span class="selector-class">.333333</span></div><div class="line"><span class="selector-tag">CuttingInKitchen</span>     30<span class="selector-class">.107527</span></div><div class="line"><span class="selector-tag">Diving</span>               28<span class="selector-class">.888889</span></div><div class="line"><span class="selector-tag">GolfSwing</span>            24<span class="selector-class">.426451</span></div></pre></td></tr></table></figure></p>
+<p>Classes with worest improvement<br><figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">StillRings</span>     <span class="selector-tag">-29</span><span class="selector-class">.032258</span></div><div class="line"><span class="selector-tag">Skiing</span>         <span class="selector-tag">-27</span><span class="selector-class">.500000</span></div><div class="line"><span class="selector-tag">Swing</span>          <span class="selector-tag">-23</span><span class="selector-class">.809524</span></div><div class="line"><span class="selector-tag">PommelHorse</span>    <span class="selector-tag">-21</span><span class="selector-class">.596639</span></div><div class="line"><span class="selector-tag">HulaHoop</span>       <span class="selector-tag">-16</span><span class="selector-class">.577540</span></div></pre></td></tr></table></figure></p>
+<p>I changed and trained the model use the following hyperparameters:</p>
+<ul>
+<li>optimization method <code>Adam</code> and <code>RMSprop</code></li>
+<li>regularization methods <code>weight decay</code></li>
+</ul>
+<h4 id="Optimization-method-Adam"><a href="#Optimization-method-Adam" class="headerlink" title="Optimization method Adam"></a>Optimization method Adam</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">python rnn<span class="selector-class">.py</span> -m Adam</div></pre></td></tr></table></figure>
+<p>The test result I get is <code>Accuracy: (0.641,0.842,0.898) 180</code> which only improves the original about 3%</p>
+<h4 id="Optimization-method-RMSprop"><a href="#Optimization-method-RMSprop" class="headerlink" title="Optimization method RMSprop"></a>Optimization method RMSprop</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">python rnn<span class="selector-class">.py</span> -m RMSprop</div></pre></td></tr></table></figure>
+<p>The test result I get is <code>Accuracy: (0.635,0.833,0.898) 180</code> which only improves the original about 2%</p>
+<h4 id="Regularization-methods-weight-decay"><a href="#Regularization-methods-weight-decay" class="headerlink" title="Regularization methods weight decay"></a>Regularization methods weight decay</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">python rnn<span class="selector-class">.py</span> -r WeightDecay</div></pre></td></tr></table></figure>
+<p>The test result I get is <code>Accuracy: (0.666,0.896,0.944) 180</code> which improves the original about 5%</p>
+<h3 id="Length-of-sequence-and-truncated-back-propagation"><a href="#Length-of-sequence-and-truncated-back-propagation" class="headerlink" title="Length of sequence and truncated back propagation"></a>Length of sequence and truncated back propagation</h3><p>The original inputs was 120 frames (4 seconds) with 30 frames for back propagation which means the model will only try to <code>capture the feature dynamics within 4 seconds</code>. So intuitively, as we fed a longer sequency of inputs into the model, the model should be improved for classifying sophisticated actions that need longer time to finish.</p>
+<p>So I tested using <code>180 frames with 30 frames</code> for backprop by<br><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">python rnn<span class="selector-class">.py</span> -l <span class="number">180</span></div></pre></td></tr></table></figure></p>
+<p>The result is : <code>Accuracy: (0.666,0.897,0.948) 180</code> which improves the original outcome by 5% which matched my expectation.<br>The training time changed from around <code>34 min</code> to <code>45min</code>.</p>
+<p>And by doing unchain every 30 frames, the gradients will be calculated mainly according to the nearest 30 frames which might lead to biased gradients. But the test result I got is not significant by executing:<br><figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">python rnn.py -t <span class="number">60</span> -l <span class="number">180</span></div></pre></td></tr></table></figure></p>
+<p>The accuracy is  <code>1.43  Accuracy: (0.657,0.882,0.939) 180</code></p>
+<h3 id="What-to-do-if-video-is-smaller-larger-than-120-frames"><a href="#What-to-do-if-video-is-smaller-larger-than-120-frames" class="headerlink" title="What to do if video is smaller/larger than 120 frames?"></a>What to do if video is smaller/larger than 120 frames?</h3><p>Too small - repeat sequence in reverse direction to maintain smooth motion until it’s long enough.<br>Too big – select random segment of length 120. </p>
+<h3 id="Optical-flow"><a href="#Optical-flow" class="headerlink" title="Optical flow"></a>Optical flow</h3><p><code>Features are trained on single images, how much do they change through the video? Is there enough change for the RNN to “learn” how to discriminate between similar classes?</code></p>
+<p>Stacked <code>optical flow</code> means the motion vectors corresponding to a particular moving point in the scene change their pixel location from one frame to the next. </p>
+<p>In the model, we try to learn the spatial movement of optical flow for classifying an action by adding <code>LSTM</code> layers to the sequency of CNN features.<br>However, the CNN model we used for capturing these features include a fully connected layers which will definitely reduce the spatial relationships between adjacent frames. </p>
+<h3 id="Inference-Technique"><a href="#Inference-Technique" class="headerlink" title="Inference Technique"></a>Inference Technique</h3><p>Since we are trying to capture the spatial movement of certain features, we might want to use a different inference technique.<br>First I extracted 60 frame clips with a stride of 60 frames from each video and average the prediction across clips.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="string">'''In each mini-batch, doing the following steps'''</span></div><div class="line"></div><div class="line"><span class="comment"># initialization</span></div><div class="line">rnn_input_data_raw = rnn_input_data[:]</div><div class="line">length_of_sequence = args.length</div><div class="line"></div><div class="line">stride    = args.stride</div><div class="line">test_runs = <span class="number">180</span>/stride</div><div class="line"></div><div class="line">pred = np.zeros((batch_size,<span class="number">101</span>),np.float32)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">for</span> test_run <span class="keyword">in</span> xrange(test_runs):</div><div class="line">	</div><div class="line">	<span class="comment"># Need to add [:] here to do a real copy !!</span></div><div class="line">	rnn_input_data = rnn_input_data_raw[:]</div><div class="line"></div><div class="line">	<span class="comment"># start and ending indices</span></div><div class="line">	start = test_run * stride</div><div class="line">	end   = start    + length_of_sequence</div><div class="line"></div><div class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> xrange(len(rnn_input_data)):</div><div class="line">	    <span class="keyword">if</span>(rnn_input_data[j].shape[<span class="number">0</span>] &lt; end):</div><div class="line">	        rnn_input_data[j] = repeatSequence(rnn_input_data[j],<span class="number">1.0</span>*end)</div><div class="line"></div><div class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> xrange(len(rnn_input_data)):</div><div class="line">	    nFrames = rnn_input_data[j].shape[<span class="number">0</span>]</div><div class="line">	    <span class="keyword">if</span>(end &lt;= nFrames):</div><div class="line">	        rnn_input_data[j] = rnn_input_data[j][start:end,:]</div><div class="line"></div><div class="line">	rnn_input_data_np = np.asarray(rnn_input_data)</div><div class="line">	rnn.reset_state()</div><div class="line">	rnn.zerograds()</div><div class="line"></div><div class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> xrange(length_of_sequence<span class="number">-1</span>):</div><div class="line">	    scale_factor = float(j+<span class="number">1</span>)/length_of_sequence <span class="comment"># 1.0</span></div><div class="line">	    x = rnn_input_data_np[:,j,:]</div><div class="line">	    x = cuda.to_gpu(x)</div><div class="line">	    current_prediction = rnn(x,y,is_train=<span class="keyword">False</span>,bn_bool=<span class="keyword">True</span>)</div><div class="line">	    current_prediction.to_cpu()</div><div class="line">	    pred[:,:] += scale_factor*np.log(current_prediction.data)</div></pre></td></tr></table></figure>
+<p>Run the test by reloading the model and execute a separate test file<br><figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">python test.py -s <span class="number">30</span> -l <span class="number">60</span></div><div class="line">``` </div><div class="line"></div><div class="line">The <span class="literal">result</span> I <span class="keyword">get</span> <span class="keyword">is</span> `Accuracy: (<span class="number">0.669</span>,<span class="number">0.902</span>,<span class="number">0.947</span>) <span class="number">60</span>`</div><div class="line"></div><div class="line">I also tested using random clip <span class="keyword">of</span> <span class="keyword">the</span> model <span class="keyword">with</span> <span class="number">60</span> frames <span class="built_in">length</span>, <span class="keyword">the</span> <span class="literal">result</span> <span class="keyword">is</span> :`Accuracy: (<span class="number">0.656</span>,<span class="number">0.893</span>,<span class="number">0.944</span>) <span class="number">60</span>` which <span class="keyword">is</span> slightly worse than <span class="keyword">my</span> stride method.</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">## Summary</span></div><div class="line">The final model I used <span class="keyword">is</span> a sequence <span class="built_in">length</span> <span class="keyword">of</span> <span class="number">180</span> <span class="keyword">with</span> <span class="number">30</span> truncated backprop. The optimization method <span class="keyword">is</span> momentumSGD, <span class="keyword">the</span> regularization method <span class="keyword">is</span> WeightDecay. The inference technique <span class="keyword">is</span> <span class="keyword">the</span> one described <span class="keyword">above</span>.</div><div class="line"></div><div class="line">`Accuracy: (<span class="number">0.677</span>,<span class="number">0.888</span>,<span class="number">0.945</span>) <span class="number">60</span>`</div><div class="line">Classes <span class="keyword">with</span> highest improvement</div></pre></td></tr></table></figure></p>
+<p>JavelinThrow        45.161290<br>Shotput             34.782609<br>PlayingViolin       32.142857<br>CricketBowling      31.984127<br>Diving              31.111111<br><figure class="highlight coq"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">Classes</span> <span class="built_in">with</span> worst improvement</div></pre></td></tr></table></figure></p>
+<p>Skiing            -22.500000<br>JumpRope          -18.421053<br>PommelHorse       -17.142857<br>MoppingFloor      -11.764706<br>Basketball        -11.428571<br>FloorGymnastics   -10.947712<br>```</p>
+<p>So <code>JavelinThrow</code> and <code>Shotput</code> improve most. <code>Skiing</code> is harder to classify. Since the length of sequence is longer, the model should be able to learn a more time-consuming action.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      A visual recognition model which combines convolutional layers and long-range temporal recursion and is end-to-end trainable.
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="RNN" scheme="http://yoursite.com/tags/RNN/"/>
+    
+      <category term="LSTM" scheme="http://yoursite.com/tags/LSTM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RNN笔记</title>
+    <link href="http://yoursite.com/2016/11/02/RNN%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2016/11/02/RNN笔记/</id>
+    <published>2016-11-02T05:37:08.000Z</published>
+    <updated>2016-11-02T18:38:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Recurrent neural networks are networks with loops in them, allowing information to persist, to allows information to be passed from one step of the network to the next.</p>
+<h3 id="Main-idea"><a href="#Main-idea" class="headerlink" title="Main idea"></a>Main idea</h3><p><code>Parameter sharing</code> makes it possible to extend and apply the model to examples of different forms<br>(different lengths, here) and generalize across them.</p>
+<p>Such sharing is particularly important when a specific piece of information can occur <code>at multiple positions</code> within the sequence.</p>
+<p>The parameter sharing used in recurrent networks relies on the assumption that the same parameters can be used for different time steps.<br>Equivalently, the assumption is that the conditional probability distribution over the variables at time t+1 given the variables at time t is <code>stationary</code>, meaning that the relationship between the previous time step and the next time step does not depend on t. </p>
+<h3 id="The-problem-of-RNN"><a href="#The-problem-of-RNN" class="headerlink" title="The problem of RNN"></a>The problem of RNN</h3><p>In a traditional recurrent neural network, <code>the magnitude of weights</code> in the transition matrix can have a strong impact on the learning process.</p>
+<p>The basic problem is that gradients propagated over many stages tend to either <code>vanish</code> (most of the time) or <code>explode</code>(rarely, but with much damage to the optimization). </p>
+<p>If the weights in this matrix are small, it can lead to a situation called vanishing gradients where the gradient signal gets so small that learning either becomes very slow or stops working altogether. </p>
+<p>Conversely, if the weights in this matrix are large, it can lead to a situation where the gradient signal is so large that it can cause learning to diverge. This is often referred to as exploding gradients.</p>
+<p>In short: </p>
+<ul>
+<li>if w is small, memory decay exponentially</li>
+<li>if w is large, gradients explode, training will be highly unstable</li>
+</ul>
+<h3 id="Solving-the-problem"><a href="#Solving-the-problem" class="headerlink" title="Solving the problem"></a>Solving the problem</h3><p>Core idea: create paths throught time that have derivatives that neither vanish nor explode</p>
+<h4 id="Leaky-units"><a href="#Leaky-units" class="headerlink" title="Leaky units"></a>Leaky units</h4><ol>
+<li>add skipping units</li>
+<li>use leaky units</li>
+</ol>
+<h4 id="LSTM-and-other-gated-RNNs"><a href="#LSTM-and-other-gated-RNNs" class="headerlink" title="LSTM and other gated RNNs"></a>LSTM and other gated RNNs</h4><p>LSTM model introduces a new structure called a memory cell which is composed of four cells:<br><img src="http://deeplearning.net/tutorial/_images/lstm_memorycell.png" alt=""></p>
+<ol>
+<li><p>input gate</p>
+<ul>
+<li>The input gate can allow incoming signal to alter the state of the memory cell or block it</li>
+</ul>
+</li>
+<li><p>forget gate</p>
+<ul>
+<li>The forget gate can modulate the memory cell’s self-recurrent connection, allowing the cell to remember or forget its previous state, as needed.</li>
+</ul>
+</li>
+<li><p>output gate</p>
+<ul>
+<li>the output gate can allow the state of the memory cell to have an effect on other neurons or prevent it</li>
+</ul>
+</li>
+<li><p>state units</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Recurrent neural networks are networks with loops in them, allowing information to persist, to allows information to be passed from one s
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="RNN" scheme="http://yoursite.com/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>量化策略评价体系</title>
+    <link href="http://yoursite.com/2016/10/26/%E9%87%8F%E5%8C%96%E7%AD%96%E7%95%A5%E8%AF%84%E4%BB%B7%E4%BD%93%E7%B3%BB/"/>
+    <id>http://yoursite.com/2016/10/26/量化策略评价体系/</id>
+    <published>2016-10-26T06:13:41.000Z</published>
+    <updated>2016-11-26T21:53:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="基于净值的回测评价"><a href="#基于净值的回测评价" class="headerlink" title="基于净值的回测评价"></a>基于净值的回测评价</h3><p>需要输入: 选择收益率累乘(净值情况)还是收益率累加</p>
+<h4 id="基本交易情况"><a href="#基本交易情况" class="headerlink" title="基本交易情况"></a>基本交易情况</h4><ol>
+<li><p>交易日期区间，交易日数量</p>
+<ul>
+<li>信号长度</li>
+</ul>
+</li>
+<li><p>总进出场次数</p>
+<ul>
+<li>做多交易次数</li>
+<li>做空交易次数</li>
+</ul>
+</li>
+<li><p>年进出场次数</p>
+</li>
+<li><p>持仓频率,平均持仓时长</p>
+<ul>
+<li>持仓日数/总交易日</li>
+</ul>
+</li>
+<li><p>交易手续费</p>
+</li>
+</ol>
+<h4 id="收益情况"><a href="#收益情况" class="headerlink" title="收益情况"></a>收益情况</h4><ol>
+<li><p>(超额)总收益</p>
+</li>
+<li><p>(超额)日均收益/周/月均收益</p>
+</li>
+<li><p>(超额)年化收益率</p>
+</li>
+</ol>
+<h4 id="风险指标"><a href="#风险指标" class="headerlink" title="风险指标"></a>风险指标</h4><ol>
+<li><p>最大回撤</p>
+<ul>
+<li>最大连续亏损月数</li>
+<li>相对于基准的最大回撤</li>
+</ul>
+</li>
+<li><p>进出场胜率</p>
+<ul>
+<li>进出场胜率</li>
+<li>买入/卖出/空仓胜率</li>
+<li>策略周/月胜率</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p>进出场盈亏比</p>
+<ul>
+<li>买入盈亏比</li>
+<li>卖出盈亏比</li>
+<li>空仓盈亏比</li>
+</ul>
+</li>
+<li><p>买入卖出中的</p>
+<ul>
+<li>最大套牢</li>
+<li>最大踏空</li>
+</ul>
+</li>
+<li><p>风险收益情况</p>
+<ul>
+<li>波动率</li>
+<li>夏普比率</li>
+</ul>
+</li>
+<li><p>进出场的平均/最大盈利和亏损</p>
+</li>
+<li><p>最长再创新高时间</p>
+</li>
+</ol>
+<h4 id="买入卖出情况统计"><a href="#买入卖出情况统计" class="headerlink" title="买入卖出情况统计"></a>买入卖出情况统计</h4><ol>
+<li>买入/卖出平均收益</li>
+<li>买入/卖出最大回撤</li>
+<li>买入/卖出胜率</li>
+<li>买入/卖出盈亏比</li>
+</ol>
+<h4 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h4><ol>
+<li>净值走势图：策略与基准</li>
+<li>净值比：策略净值除以基准净值，以此显示超额收益来源</li>
+<li>仓位变动图</li>
+<li>(多空)累计收益，年度收益分布，月度收益分布</li>
+<li>交易次数年度分布</li>
+</ol>
+<h3 id="回测框架"><a href="#回测框架" class="headerlink" title="回测框架"></a>回测框架</h3><ol>
+<li>策略实行总情况</li>
+<li>分年度情况<ul>
+<li>交易次数</li>
+<li>总收益，基准收益，最大回撤，进出场胜率/盈亏比，夏普比率</li>
+</ul>
+</li>
+</ol>
+<p>实行办法: 将信号按年度分割，分成<code>[多个年度,总信号]</code>这样的框架，再使用map多线程处理。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      基于净值情况的评价和基于累加收益率的评价体系
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scrapy库学习</title>
+    <link href="http://yoursite.com/2016/10/26/scrapy%E5%BA%93%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://yoursite.com/2016/10/26/scrapy库学习/</id>
+    <published>2016-10-26T06:01:02.000Z</published>
+    <updated>2016-10-26T19:03:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。粗略来讲，scrapy的运行架构如下：</p>
+<ol>
+<li>引擎从调度器中取出一个链接(URL)用于接下来的抓取</li>
+<li>引擎把URL封装成一个请求(Request)传给下载器，下载器把资源下载下来，并封装成应答包(Response)</li>
+<li>解析下载的资源</li>
+<li>若是解析出实体（Item）,则交给实体管道进行进一步的处理。</li>
+<li>若是解析出的是链接（URL）,则把URL交给Scheduler等待抓取</li>
+</ol>
+<h2 id="创建一个scrapy项目"><a href="#创建一个scrapy项目" class="headerlink" title="创建一个scrapy项目"></a>创建一个scrapy项目</h2><p>在命令行运行<code>scrapy startproject name</code><br>创建一个名为<code>name</code>的文件夹，里面包含了scrapy项目的文件。</p>
+<h3 id="Items"><a href="#Items" class="headerlink" title="Items"></a>Items</h3><p>爬取的主要目标就是从非结构性的数据源提取结构性数据，例如网页。 Scrapy提供 Item 类来满足这样的需求。<br>Item 对象是种简单的容器，保存了爬取到得数据。 其提供了 类似于词典(dictionary-like) 的API以及用于声明可用字段的简单语法。<br>在<code>items.py</code>文件中编辑关于Items的</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    name = scrapy.Field()</div><div class="line">    price = scrapy.Field()</div><div class="line">    stock = scrapy.Field()</div><div class="line">    last_updated = scrapy.Field(serializer=str)</div><div class="line">    <span class="comment"># Field 对象指明了每个字段的元数据(metadata)。</span></div></pre></td></tr></table></figure>
+<h3 id="Spiders"><a href="#Spiders" class="headerlink" title="Spiders"></a>Spiders</h3><p>Spider类定义了如何爬取某个(或某些)网站。包括了爬取的动作(例如:是否跟进链接)以及如何从网页的内容中提取结构化数据(爬取item)。 换句话说，Spider就是您定义爬取的动作及分析某个网页(或者是有些网页)的地方。</p>
+<ol>
+<li><p>以初始的URL初始化<code>Request</code>，并设置回调函数。当该<code>request</code>下载完毕并返回时，将生成<code>response</code>，并作为参数传给该回调函数。<code>spider</code>中初始的<code>request</code>是通过调用<code>start_requests()</code>来获取的。`</p>
+</li>
+<li><p>在回调函数内分析返回的(网页)内容，返回<code>Item</code>对象或者<code>Request</code>或者一个包括二者的可迭代容器。 返回的<code>Request</code>对象之后会经过<code>Scrapy</code>处理，下载相应的内容，并调用设置的<code>callback</code>函数(函数可相同)。</p>
+</li>
+<li><p>在回调函数内，您可以使用 选择器(Selectors) (也可以使用BeautifulSoup, lxml 或者您想用的任何解析器) 来分析网页内容，并根据分析的数据生成item。</p>
+</li>
+<li><p>最后，由spider返回的item将被存到数据库(由某些 Item Pipeline 处理)或使用<code>Feed exports</code>存入到文件中。</p>
+</li>
+</ol>
+<h4 id="创建一个Spider类"><a href="#创建一个Spider类" class="headerlink" title="创建一个Spider类"></a>创建一个Spider类</h4><p>在命令行输入<code>scrapy genspider [-t template] &lt;name&gt; &lt;domain&gt;</code><br>生成一个名为<code>name</code>，初始url为<code>domain</code>，使用了<code>template</code>模板的spider类</p>
+<p><code>start_request()</code>: 使用<code>start_urls</code>的url生成Request。<br>对于需要登录的网站，需要override该方法。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> [scrapy.FormRequest(<span class="string">"http://www.example.com/login"</span>,</div><div class="line">                                   formdata=&#123;<span class="string">'user'</span>: <span class="string">'john'</span>, <span class="string">'pass'</span>: <span class="string">'secret'</span>&#125;,</div><div class="line">                                   callback=self.parse)]</div></pre></td></tr></table></figure>
+<p>当response没有指定回调函数时，<code>parse()</code>是Scrapy处理下载的response的默认方法。</p>
+<p>小例子:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"><span class="keyword">from</span> tutorial.items <span class="keyword">import</span> DmozItem</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DmozSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">"dmoz"</span></div><div class="line">    allowed_domains = [<span class="string">"dmoz.org"</span>]</div><div class="line">    start_urls = [</div><div class="line">        <span class="string">"http://www.dmoz.org/Computers/Programming/Languages/Python/"</span>,</div><div class="line">    ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line"></div><div class="line">    	<span class="string">'''this function will yield a new request from </span></div><div class="line">    	   the first response and call parse_dir_contents</div><div class="line">    	'''</div><div class="line"></div><div class="line">        <span class="keyword">for</span> href <span class="keyword">in</span> response.css(<span class="string">"ul.directory.dir-col &gt; li &gt; a::attr('href')"</span>):</div><div class="line">            url = response.urljoin(response.url, href.extract())</div><div class="line">            <span class="keyword">yield</span> scrapy.Request(url, callback=self.parse_dir_contents)</div><div class="line">            </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_dir_contents</span><span class="params">(self, response)</span>:</span></div><div class="line"></div><div class="line">    	<span class="string">'''the new response will be analysed then go back to parse again'''</span></div><div class="line"></div><div class="line">        <span class="keyword">for</span> sel <span class="keyword">in</span> response.xpath(<span class="string">'//ul/li'</span>):</div><div class="line">            item = DmozItem()</div><div class="line">            item[<span class="string">'title'</span>] = sel.xpath(<span class="string">'a/text()'</span>).extract()</div><div class="line">            item[<span class="string">'link'</span>] = sel.xpath(<span class="string">'a/@href'</span>).extract()</div><div class="line">            item[<span class="string">'desc'</span>] = sel.xpath(<span class="string">'text()'</span>).extract()</div><div class="line">            <span class="keyword">yield</span> item</div></pre></td></tr></table></figure></p>
+<h4 id="创建一个CrawlSpider类"><a href="#创建一个CrawlSpider类" class="headerlink" title="创建一个CrawlSpider类"></a>创建一个CrawlSpider类</h4><p>在使用命令行创建Spider时加入<code>-t crawl</code>命令。<br>除了从Spider继承过来的属性外，该类还提供了一个新的属性<code>rule</code>爬取规则:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="string">'''一个包含一个(或多个) Rule 对象的集合(list)。 </span></div><div class="line">   每个 Rule 对爬取网站的动作定义了特定表现。 </div><div class="line">'''</div><div class="line">rules(link_extractor, callback=<span class="keyword">None</span>, cb_kwargs=<span class="keyword">None</span>, </div><div class="line">      follow=<span class="keyword">None</span>,process_links=<span class="keyword">None</span>, process_request=<span class="keyword">None</span>)</div></pre></td></tr></table></figure></p>
+<p><code>link_extractor</code>是一个 <code>LinkExtractor</code>对象。其定义了如何从爬取到的页面提取链接。</p>
+<p><code>callback</code>是一个<code>callable</code>或<code>string</code>(该spider中同名的函数将会被调用)。从<code>link_extractor</code>中每获取到链接时将会调用该函数。该回调函数接受一个response作为其第一个参数， 并返回一个包含<code>Item</code>以及(或)<code>Request</code>对象(或者这两者的子类)的列表(list)。</p>
+<p>一个简单例子:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'example.com'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://www.example.com'</span>]</div><div class="line"></div><div class="line">    rules = (</div><div class="line">        <span class="comment"># 提取匹配 'category.php' (但不匹配 'subsection.php') 的链接</span></div><div class="line">        <span class="comment"># 并跟进链接(没有callback意味着follow默认为True)</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'category\.php'</span>, ), deny=(<span class="string">'subsection\.php'</span>, ))),</div><div class="line"></div><div class="line">        <span class="comment"># 提取匹配 'item.php' 的链接并使用spider的parse_item方法进行分析</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'item\.php'</span>, )), callback=<span class="string">'parse_item'</span>),</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        self.logger.info(<span class="string">'Hi, this is an item page! %s'</span>, response.url)</div><div class="line"></div><div class="line">        item = scrapy.Item()</div><div class="line">        item[<span class="string">'id'</span>] = response.xpath(<span class="string">'//td[@id="item_id"]/text()'</span>).re(<span class="string">r'ID: (\d+)'</span>)</div><div class="line">        item[<span class="string">'name'</span>] = response.xpath(<span class="string">'//td[@id="item_name"]/text()'</span>).extract()</div><div class="line">        item[<span class="string">'description'</span>] = response.xpath(<span class="string">'//td[@id="item_description"]/text()'</span>).extract()</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。粗略来讲，scrapy的运行架构如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;引擎从调度器中取出一个链接(URL)用于接下来的抓取&lt;/li&gt;
+&lt;li&gt;引擎
+    
+    </summary>
+    
+      <category term="python爬虫" scheme="http://yoursite.com/categories/python%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>择时体系梳理</title>
+    <link href="http://yoursite.com/2016/10/26/%E6%8B%A9%E6%97%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86/"/>
+    <id>http://yoursite.com/2016/10/26/择时体系梳理/</id>
+    <published>2016-10-26T06:00:07.000Z</published>
+    <updated>2016-10-26T19:50:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="择时目标"><a href="#择时目标" class="headerlink" title="择时目标"></a>择时目标</h3><h4 id="一个易于理解且富有经济含义的市场预测框架"><a href="#一个易于理解且富有经济含义的市场预测框架" class="headerlink" title="一个易于理解且富有经济含义的市场预测框架"></a>一个易于理解且富有经济含义的市场预测框架</h4><ul>
+<li>预测的方法既具有经济学含义同时也有统计显著性</li>
+<li>尽量多的从不同市场交易数据中发掘有价值信息</li>
+<li>结合行为金融、国内市场机制挖掘有价值信息</li>
+</ul>
+<h4 id="一个具可操作性、指导性的模型"><a href="#一个具可操作性、指导性的模型" class="headerlink" title="一个具可操作性、指导性的模型"></a>一个具可操作性、指导性的模型</h4><ul>
+<li><code>尽量少的引入参数</code>，避免过度的数据挖掘</li>
+<li>多头策略夏普比率较高</li>
+<li>年换手率不宜过高 (每个月平均换仓不超过两次) </li>
+<li>合理管理仓位，最大回撤控制在较小范围内</li>
+<li><code>连续亏损时间不宜过长</code> (例如一个月)</li>
+</ul>
+<h3 id="择时思路"><a href="#择时思路" class="headerlink" title="择时思路"></a>择时思路</h3><h4 id="选择具有预测能力的择时因子"><a href="#选择具有预测能力的择时因子" class="headerlink" title="选择具有预测能力的择时因子"></a>选择具有预测能力的择时因子</h4><ul>
+<li>有清晰的经济逻辑</li>
+<li>有显著的统计相关性</li>
+</ul>
+<h4 id="综合各类因子表现进行市场预测"><a href="#综合各类因子表现进行市场预测" class="headerlink" title="综合各类因子表现进行市场预测"></a>综合各类因子表现进行市场预测</h4><ul>
+<li>综合选择的因子形成最终市场观点</li>
+<li><code>综合后的因子具有较高的稳健性</code></li>
+</ul>
+<h4 id="确定资产和仓位"><a href="#确定资产和仓位" class="headerlink" title="确定资产和仓位"></a>确定资产和仓位</h4><ul>
+<li>根据预测结果实施相应的多空策略</li>
+<li>根据因子的看涨看跌因素决定资产仓位的高低</li>
+</ul>
+<h3 id="择时原则"><a href="#择时原则" class="headerlink" title="择时原则"></a>择时原则</h3><h4 id="强调模型的经济学逻辑和统计的显著性"><a href="#强调模型的经济学逻辑和统计的显著性" class="headerlink" title="强调模型的经济学逻辑和统计的显著性"></a>强调模型的经济学逻辑和统计的显著性</h4><ul>
+<li><code>因子的统计规律性需要能够从经济学角度解释</code></li>
+</ul>
+<h4 id="用于预测的数据尽量来自多个市场交易的量价数据"><a href="#用于预测的数据尽量来自多个市场交易的量价数据" class="headerlink" title="用于预测的数据尽量来自多个市场交易的量价数据"></a>用于预测的数据尽量来自多个市场交易的量价数据</h4><ul>
+<li>避免使用宏观经济数据，因为宏观经济数据往往被充分预测</li>
+</ul>
+<h4 id="仅进行中短期择时"><a href="#仅进行中短期择时" class="headerlink" title="仅进行中短期择时"></a>仅进行中短期择时</h4><ul>
+<li>长期走势受不确定因素的影响较大</li>
+</ul>
+<h3 id="择时的问题"><a href="#择时的问题" class="headerlink" title="择时的问题"></a>择时的问题</h3><ul>
+<li><p><code>将偶然性误差当成系统性误差</code>检测出来，将假的弄成真的，对应到择时之中就是<code>将正常的点当成拐点</code>给误判了出来，若根据这个来操作会造成反方向的严重损失</p>
+</li>
+<li><p>错误地<code>将系统性误差当成偶然性误差</code>过滤掉，将真的当成假的，在择时中该抓住的拐点机会没有抓住，造成踏空或者套牢。</p>
+</li>
+</ul>
+<p>这两类错误来源于金融数据巨大的噪音，因此择时的本质在于找到这样一些<code>过滤方法</code>，来寻求可操作的拐点机会，将两类错误— —误判和漏判的概率降到一个比较低的水平。</p>
+<p>通常我们使用的较长周期的指标往往基于过去给定区间的数据来表明当前的市场状况，大多没什么预见性的能力。但在某种程度上，这些滞后指标可被用作一个<code>强有力的滤镜</code>，帮助确定<code>趋势方向</code>和<code>建仓时机</code>。<br>而在更高频的情况下，择时信号利用了<code>更多的信息</code>，更容易受到噪声和调仓而造成的损失。</p>
+<p>可行的办法：</p>
+<h4 id="1-综合因子进行选择"><a href="#1-综合因子进行选择" class="headerlink" title="1. 综合因子进行选择"></a>1. 综合因子进行选择</h4><h4 id="2-周期："><a href="#2-周期：" class="headerlink" title="2. 周期："></a>2. 周期：</h4><p>对于当前的时间序列，利用过去 历史多期数据作为训练集，来对未来进行信号判断，并预估信号持续的期数，在某种程 度上是在衡量指标的动量特征。</p>
+<ul>
+<li>周期过短，拟合效果不显著，建模存 在问题，无法对未来的涨跌进行具有统计意义上的推断，可能会产生较多的错误信号</li>
+<li>周期过长，拟合可能成立，但是无法灵活有效地 对未来的行情进行概率上的判断，存在太大的时滞性</li>
+</ul>
+<p>选择周期的方式</p>
+<ol>
+<li><p>交易者行为，如20日代表过去一个月的平均建仓成本</p>
+</li>
+<li><p>约定俗称的一类指标，比如MACD的12、26和9。该周期操作的人越多，该方法就可能越有效</p>
+</li>
+</ol>
+<h4 id="3-频率"><a href="#3-频率" class="headerlink" title="3. 频率"></a>3. 频率</h4><p>择时频率的选择则更偏向于逻辑，基于约定俗成的频率选取相对较少。</p>
+<p>择时频率选择更偏向于单频率，但是市场上的投资者结构是存在长期和短期之分的，单纯从某一个单一频率的角度来对未来方向进行判断，实际上有失全面性。</p>
+<h4 id="周期与频率的结合："><a href="#周期与频率的结合：" class="headerlink" title="周期与频率的结合："></a>周期与频率的结合：</h4><ul>
+<li>在大时间结构指标方向上交易</li>
+<li>随着小时间结构指标执行交易入场计划</li>
+</ul>
+<p>例子: </p>
+<ol>
+<li>小时线产生信号，在日线级别上进行交易</li>
+<li>日线产生信号，在小时线级别上进行交易</li>
+</ol>
+<h3 id="择时指标构建"><a href="#择时指标构建" class="headerlink" title="择时指标构建"></a>择时指标构建</h3><p>信号生成方式：</p>
+<ol>
+<li>定期择时指标：分位数机制<ul>
+<li>检验稳健性：路径依赖性 -&gt; 自T/T+1/T+2/T+3/T+4/T+5日为起点，检验不同路径下指标的稳健性</li>
+</ul>
+</li>
+<li>不定期择时指标：设定特定阈值突破<ul>
+<li>检验稳健性：检验多维度参数获得的sharpe ratio稳定性</li>
+</ul>
+</li>
+</ol>
+<p>要注意的是不同指标具有特定的信号生成方式，信号生成方式会显著提高择时效果</p>
+<h3 id="体系构建"><a href="#体系构建" class="headerlink" title="体系构建"></a>体系构建</h3><p>基本面</p>
+<p>技术面</p>
+<p>资金面</p>
+<p>情绪面</p>
+]]></content>
+    
+    <summary type="html">
+    
+      从择时的目标，思路，原则，常见问题，常见体系和指标构建方法入手来对量化择时进行分析
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+      <category term="择时" scheme="http://yoursite.com/tags/%E6%8B%A9%E6%97%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>requests库</title>
+    <link href="http://yoursite.com/2016/10/22/requests%E5%BA%93/"/>
+    <id>http://yoursite.com/2016/10/22/requests库/</id>
+    <published>2016-10-22T08:29:46.000Z</published>
+    <updated>2016-10-26T19:02:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>官方简介: Requests is an elegant and simple HTTP library for Python, built for human beings. </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div><div class="line"><span class="comment"># r.text</span></div><div class="line">r.status_code</div><div class="line"><span class="comment"># r.cookies['example_cookie_name']</span></div><div class="line"><span class="comment"># r = requests.get(url, cookies=cookies)</span></div></pre></td></tr></table></figure>
+<p>利用cookie访问豆瓣网站:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">import http<span class="selector-class">.cookiejar</span>, requests</div><div class="line">cj = http<span class="selector-class">.cookiejar</span><span class="selector-class">.CookieJar</span>()</div><div class="line"></div><div class="line">url = <span class="string">'http://www.douban.com/'</span></div><div class="line"></div><div class="line">user_agent = (<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) "</span></div><div class="line">              <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">              <span class="string">"Chrome/53.0.2785.143 Safari/537.36"</span>)</div><div class="line"></div><div class="line">values = &#123;<span class="string">'form_email'</span>: <span class="string">'506271837@qq.com'</span>,</div><div class="line">          <span class="string">'form_password'</span>: <span class="string">'###########'</span>&#125;</div><div class="line"></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: user_agent&#125;</div><div class="line"></div><div class="line">s = requests.Session()</div><div class="line">s<span class="selector-class">.cookies</span> = cj</div><div class="line"></div><div class="line">req = s.post(url, data=values, headers=headers)</div><div class="line"></div><div class="line"><span class="keyword">if</span> req<span class="selector-class">.status_code</span> == <span class="number">200</span>:</div><div class="line">    print(<span class="string">'log in successfully'</span>)</div><div class="line"></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> cj:</div><div class="line">    print (<span class="string">'Name = '</span>+item.name)</div><div class="line">    print (<span class="string">'Value = '</span>+item.value)</div></pre></td></tr></table></figure>
+<p>Requests 允许你使用自己指定的身份验证机制。<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</div><div class="line"></div><div class="line">credentials = HTTPBasicAuth(<span class="string">'fushuyue_apply@hotmail.com'</span>, <span class="string">'575515251Fsy'</span>)</div><div class="line">response = requests.get(<span class="string">"https://accounts.coursera.org/signin"</span>, auth=credentials)</div></pre></td></tr></table></figure></p>
+<p>一个例子：下载图片<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> os.path</div><div class="line"><span class="keyword">from</span> StringIO <span class="keyword">import</span> StringIO</div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</div><div class="line"></div><div class="line">req = requests.get(url = <span class="string">"http://huaban.com/favorite/beauty/"</span>)</div><div class="line">htmlPage = req.text</div><div class="line"></div><div class="line">prog = re.compile(<span class="string">r'app\.page\["pins"\].*'</span>)</div><div class="line">appPins = prog.findall(htmlPage)</div><div class="line"></div><div class="line">true = <span class="keyword">True</span></div><div class="line">null = <span class="keyword">None</span></div><div class="line">result = eval(appPins[<span class="number">0</span>][<span class="number">19</span>:<span class="number">-1</span>])</div><div class="line"></div><div class="line">images = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result:</div><div class="line">    info = &#123;&#125;</div><div class="line">    info[<span class="string">'id'</span>] = str(i[<span class="string">'pin_id'</span>])</div><div class="line">    info[<span class="string">'url'</span>] = <span class="string">"http://img.hb.aicdn.com/"</span> + i[<span class="string">"file"</span>][<span class="string">"key"</span>] + <span class="string">"_fw658"</span></div><div class="line">    info[<span class="string">'type'</span>] = i[<span class="string">"file"</span>][<span class="string">"type"</span>][<span class="number">6</span>:]</div><div class="line">    images.append(info)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(image)</span>:</span></div><div class="line">	req = requests.get(image[<span class="string">"url"</span>])</div><div class="line">	imageName = os.path.join(<span class="string">"/Users/fushuyue/Desktop/images/"</span> + image[<span class="string">"id"</span>] + <span class="string">"."</span> + image[<span class="string">"type"</span>])</div><div class="line">	print(<span class="string">"downloading &#123;&#125;"</span>.format(imageName))</div><div class="line">	i = Image.open(BytesIO(req.content))</div><div class="line">	i.save(imageName,format = image[<span class="string">"type"</span>])</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="keyword">with</span> ThreadPool(<span class="number">8</span>) <span class="keyword">as</span> thread_pool:</div><div class="line">	results = thread_pool.map_async(download, images)</div><div class="line">thread_pool.join()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># def __make_ajax_url(self, No):</span></div><div class="line"><span class="comment">#     """ 返回ajax请求的url """</span></div><div class="line"><span class="comment">#     return self.homeUrl + "?i5p998kw&amp;max=" + No + "&amp;limit=20&amp;wfl=1"</span></div><div class="line"></div><div class="line"><span class="comment"># def __load_more(self, maxNo):</span></div><div class="line"><span class="comment">#     """ 刷新页面 """</span></div><div class="line"><span class="comment">#     return requests.get(url = self.__make_ajax_url(maxNo)).content</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;官方简介: Requests is an elegant and simple HTTP library for Python, built for human beings. &lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr
+    
+    </summary>
+    
+      <category term="python爬虫" scheme="http://yoursite.com/categories/python%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>urllib库学习</title>
+    <link href="http://yoursite.com/2016/10/22/urllib%E5%BA%93%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://yoursite.com/2016/10/22/urllib库学习/</id>
+    <published>2016-10-22T03:41:21.000Z</published>
+    <updated>2016-10-22T23:25:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><p><code>urllib.request</code> is a Python module for fetching URLs (Uniform Resource Locators). </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line"><span class="keyword">with</span> urllib.request.urlopen(<span class="string">'http://python.org/'</span>) <span class="keyword">as</span> response:</div><div class="line">   html = response.read()    <span class="comment"># 获得页面HTML代码</span></div></pre></td></tr></table></figure>
+<p>Retrieve a resource via URL and store it in a temporary location: <code>urlretrieve()</code> function:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line">local_filename, headers = urllib.request.urlretrieve(<span class="string">'http://python.org/'</span>)</div><div class="line">html = open(local_filename)</div></pre></td></tr></table></figure></p>
+<h3 id="Request-object"><a href="#Request-object" class="headerlink" title="Request object"></a><code>Request</code> object</h3><h4 id="basic-idea"><a href="#basic-idea" class="headerlink" title="basic idea"></a>basic idea</h4><p>HTTP is based on requests and responses - the client makes requests and servers send responses. urllib.request mirrors this with a <code>Request</code> object which represents the HTTP request you are making. In its simplest form you create a <code>Request</code> object that specifies the URL you want to fetch. Calling urlopen with this <code>Request</code> object returns a <code>response</code> object for the URL requested.<br>This response is a file-like object, which means you can for example call <code>.read()</code> on the response:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.parse</div><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line"></div><div class="line">url = <span class="string">'http://www.someserver.com/cgi-bin/register.cgi'</span></div><div class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>,</div><div class="line">          <span class="string">'location'</span> : <span class="string">'Northampton'</span>,</div><div class="line">          <span class="string">'language'</span> : <span class="string">'Python'</span> &#125;</div><div class="line"></div><div class="line">data = urllib.parse.urlencode(values)</div><div class="line">data = data.encode(<span class="string">'ascii'</span>) <span class="comment"># data should be bytes</span></div><div class="line">req = urllib.request.Request(url, data)</div><div class="line"><span class="keyword">with</span> urllib.request.urlopen(req) <span class="keyword">as</span> response:</div><div class="line">   the_page = response.read()</div></pre></td></tr></table></figure>
+<h4 id="add-headers"><a href="#add-headers" class="headerlink" title="add headers"></a>add headers</h4><p>By default urllib identifies itself as Python-urllib/x.y. In order to disguise the program, we can create a Request object that pass a dictionary of headers in<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.parse</div><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line"></div><div class="line">url = <span class="string">'http://www.douban.com/'</span></div><div class="line"></div><div class="line">user_agent = (<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) "</span></div><div class="line">              <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">              <span class="string">"Chrome/53.0.2785.143 Safari/537.36"</span>)</div><div class="line"></div><div class="line">values = &#123;<span class="string">'form_email'</span>: <span class="string">'506271837@qq.com'</span>,</div><div class="line">          <span class="string">'form_password'</span>: <span class="string">'###########'</span>&#125;</div><div class="line"></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: user_agent,</div><div class="line">           <span class="string">'Referer'</span>:https://www.douban.com/&#125;</div><div class="line"></div><div class="line">data = urllib.parse.urlencode(values)</div><div class="line">data = data.encode(<span class="string">'ascii'</span>)</div><div class="line"></div><div class="line">req = urllib.request.Request(url, data, headers)</div><div class="line"><span class="keyword">with</span> urllib.request.urlopen(req) <span class="keyword">as</span> response:</div><div class="line">   the_page = response.read()</div></pre></td></tr></table></figure></p>
+<h3 id="deal-with-error"><a href="#deal-with-error" class="headerlink" title="deal with error"></a>deal with error</h3><p>simply add these code:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> Request, urlopen</div><div class="line"><span class="keyword">from</span> urllib.error <span class="keyword">import</span> URLError</div><div class="line">req = Request(someurl)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    response = urlopen(req)</div><div class="line"><span class="keyword">except</span> URLError <span class="keyword">as</span> e:</div><div class="line">    <span class="keyword">if</span> hasattr(e, <span class="string">'reason'</span>):</div><div class="line">        print(<span class="string">'We failed to reach a server.'</span>)</div><div class="line">        print(<span class="string">'Reason: '</span>, e.reason)</div><div class="line">    <span class="keyword">elif</span> hasattr(e, <span class="string">'code'</span>):</div><div class="line">        print(<span class="string">'The server couldn\'t fulfill the request.'</span>)</div><div class="line">        print(<span class="string">'Error code: '</span>, e.code)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    <span class="comment"># everything is fine</span></div></pre></td></tr></table></figure></p>
+<h3 id="http-cookiejar"><a href="#http-cookiejar" class="headerlink" title="http.cookiejar"></a>http.cookiejar</h3><p>The http.cookiejar module defines classes for automatic handling of HTTP cookies. It is useful for accessing web sites that require small pieces of data – cookies – to be set on the client machine by an HTTP response from a web server, and then returned to the server in later HTTP requests.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> http.cookiejar, urllib.request</div><div class="line">cj = http.cookiejar.CookieJar()</div><div class="line">opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))</div><div class="line"></div><div class="line"></div><div class="line">url = <span class="string">'http://www.douban.com/'</span></div><div class="line"></div><div class="line">user_agent = (<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) "</span></div><div class="line">              <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">              <span class="string">"Chrome/53.0.2785.143 Safari/537.36"</span>)</div><div class="line"></div><div class="line">values = &#123;<span class="string">'form_email'</span>: <span class="string">'506271837@qq.com'</span>,</div><div class="line">          <span class="string">'form_password'</span>: <span class="string">'###########'</span>&#125;</div><div class="line"></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: user_agent,</div><div class="line">           <span class="string">'Referer'</span>:<span class="string">'https://www.douban.com/'</span>&#125;</div><div class="line"></div><div class="line">data = urllib.parse.urlencode(values)</div><div class="line">data = data.encode(<span class="string">'ascii'</span>)</div><div class="line"></div><div class="line">req = urllib.request.Request(url, data, headers)</div><div class="line"><span class="keyword">with</span> opener.open(req) <span class="keyword">as</span> response:</div><div class="line">    the_page = response.read()</div><div class="line">    <span class="keyword">if</span> response.getcode() == <span class="number">200</span> :</div><div class="line">        print(<span class="string">"登陆成功..."</span>)</div></pre></td></tr></table></figure>
+<h4 id="save-a-cookie"><a href="#save-a-cookie" class="headerlink" title="save a cookie"></a>save a cookie</h4><p><code>class http.cookiejar.LWPCookieJar(filename, delayload=None, policy=None)</code></p>
+<p>A <code>FileCookieJar</code> that can load from and save cookies to disk in format compatible with the libwww-perl library’s Set-Cookie3 file format. This is convenient if you want to store cookies in a human-readable file.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> http.cookiejar</div><div class="line"></div><div class="line">cookie_file = <span class="string">'cookies'</span></div><div class="line">cj = http.cookiejar.LWPCookieJar(cookie_file)</div><div class="line"></div><div class="line"><span class="comment"># Load existing cookies (file might not yet exist)</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    cj.load()</div><div class="line"><span class="keyword">except</span>:</div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">s = requests.Session()</div><div class="line">s.cookies = cj</div><div class="line"></div><div class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/sessioncookie/123456789'</span>)</div><div class="line">r = s.get(<span class="string">"http://httpbin.org/cookies"</span>)</div><div class="line"></div><div class="line"><span class="comment"># Save cookies to disk, even session cookies</span></div><div class="line">cj.save(ignore_discard=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      利用python自带模块urllib和http.cookiejar编写简单的网络爬虫(登录，设置头部，储存cookie)
+    
+    </summary>
+    
+      <category term="python爬虫" scheme="http://yoursite.com/categories/python%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="urllib" scheme="http://yoursite.com/tags/urllib/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深度强化学习笔记</title>
+    <link href="http://yoursite.com/2016/10/21/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2016/10/21/深度强化学习笔记/</id>
+    <published>2016-10-21T14:58:58.000Z</published>
+    <updated>2016-10-31T23:02:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Basic-ideas-of-Reinforcement-learning"><a href="#Basic-ideas-of-Reinforcement-learning" class="headerlink" title="Basic ideas of Reinforcement learning"></a>Basic ideas of Reinforcement learning</h3><ul>
+<li>Interaction between an active decision-making agent and its environment</li>
+<li>Used for many sequential decision making and control problems</li>
+<li>Reinforcement learning problems involve learning what to do—how to map situations to actions—so as to maximize a numerical reward signal.</li>
+<li>Discover which actions yield the most reward by trying them</li>
+</ul>
+<p>RL: given observation, output action, receive reward, with unknown and stochastic dependence on action and observation, AND we perform a sequence of actions, and <code>states depend on previous actions</code></p>
+<h3 id="Some-important-characters-of-RL"><a href="#Some-important-characters-of-RL" class="headerlink" title="Some important characters of RL:"></a>Some important characters of RL:</h3><ul>
+<li>learning system’s actions influence its later inputs</li>
+<li>the learner is not told which actions to take, but instead must discover which actions yield the most reward by trying them out.</li>
+<li>actions may affect not only the immediate reward but also the next situation and, through that, all subsequent rewards</li>
+<li>it uses training information that evaluates the actions taken rather than instructs by giving correct actions</li>
+</ul>
+<h3 id="Challenges-of-RL-trade-off-between-exploration-and-exploitation"><a href="#Challenges-of-RL-trade-off-between-exploration-and-exploitation" class="headerlink" title="Challenges of RL: trade off between exploration and exploitation"></a>Challenges of RL: trade off between exploration and exploitation</h3><p>To obtain a lot of reward, a reinforcement learning agent must prefer actions that it has tried in the past and found to be effective in producing reward.</p>
+<ul>
+<li>Explore: to discover such actions, it has to try actions that it has not selected before in order to make better action selections in the future</li>
+<li>Exploit: exploit what it already knows in order to obtain reward<br><code>Exploitation is the right thing to do to maximize the expected reward on the one step, but exploration may produce the greater total reward in the long run.</code></li>
+</ul>
+<h3 id="Four-main-elements-of-RL"><a href="#Four-main-elements-of-RL" class="headerlink" title="Four main elements of RL:"></a>Four main elements of RL:</h3><ol>
+<li>Policy: a mapping from perceived states of the environment to actions to be taken when in those states</li>
+<li>Reward: the immediate, intrinsic desirability of environmental states on each time step</li>
+<li>Value function: the total amount of reward an agent can expect to accumulate over the future, starting from that state</li>
+<li>Model of environment: something that mimics the behavior of the environment that allows inferences to be made about how the environment will behave</li>
+</ol>
+<h3 id="A-basic-example-of-RL"><a href="#A-basic-example-of-RL" class="headerlink" title="A basic example of RL:"></a>A basic example of RL:</h3><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><div class="line">You are faced repeatedly <span class="keyword">with</span> <span class="keyword">a</span> choice <span class="keyword">among</span> k different options, <span class="keyword">or</span> actions. </div><div class="line">After <span class="keyword">each</span> choice you receive <span class="keyword">a</span> numerical reward chosen <span class="built_in">from</span> <span class="keyword">a</span> stationary </div><div class="line">probability distribution that depends <span class="keyword">on</span> <span class="title">the</span> <span class="title">action</span> <span class="title">you</span> <span class="title">selected</span>. </div><div class="line">Your objective is <span class="built_in">to</span> maximize <span class="keyword">the</span> expected total reward over some <span class="built_in">time</span> period, </div><div class="line"><span class="keyword">for</span> example, over <span class="number">1000</span> action selections, <span class="keyword">or</span> <span class="built_in">time</span> steps.</div></pre></td></tr></table></figure>
+<h3 id="bandit-algorithm"><a href="#bandit-algorithm" class="headerlink" title="bandit algorithm"></a>bandit algorithm</h3><h4 id="Greedy-algorithm"><a href="#Greedy-algorithm" class="headerlink" title="Greedy algorithm:"></a>Greedy algorithm:</h4><p>select the action (or one of the actions) with highest estimated action value</p>
+<h4 id="epsilon-greedy-algorithm"><a href="#epsilon-greedy-algorithm" class="headerlink" title="epsilon greedy algorithm:"></a>epsilon greedy algorithm:</h4><p>behave greedily most of the time, but every once in a while, say with small probability epsilon, instead to select randomly from amongst all the actions with equal probability independently of the action-value estimates</p>
+<h4 id="which-algoritm-to-choose"><a href="#which-algoritm-to-choose" class="headerlink" title="which algoritm to choose:"></a>which algoritm to choose:</h4><p>The advantage of “epsilon-greedy over greedy methods depends on the task.<br>With <code>noisier rewards</code> it takes more exploration to find the optimal action, and “epsilon-greedy methods should fare even better relative to the greedy method.<br>On the other hand, if the reward variances were zero, then the greedy method would know the true value of each action after trying it once.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      对深度强化学习(Deep Reinforcement Learning)的学习笔记
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="RL" scheme="http://yoursite.com/tags/RL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>复权问题处理</title>
+    <link href="http://yoursite.com/2016/10/19/%E5%A4%8D%E6%9D%83%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2016/10/19/复权问题处理/</id>
+    <published>2016-10-19T03:27:15.000Z</published>
+    <updated>2016-10-26T19:12:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在对alpha策略回测时，容易忽略以下几点:</p>
+<ol>
+<li>涨跌停限制</li>
+<li>期货保证金要求</li>
+<li>期货移仓价差</li>
+<li>期货择时损益</li>
+<li>期货基差损益</li>
+<li>交易滑点</li>
+<li>缩股、股改</li>
+<li>幸存者偏差    </li>
+<li>分红配股</li>
+</ol>
+<p>量化策略进行回测时复权问题是非常容易忽略的一点。网上的主流量化回测网站都为了简便而直接使用复权数据。本文将回答、整理复权数据对于回测结果的影响。</p>
+<h2 id="除权与除息简单介绍"><a href="#除权与除息简单介绍" class="headerlink" title="除权与除息简单介绍"></a>除权与除息简单介绍</h2><h3 id="导致除权的情况"><a href="#导致除权的情况" class="headerlink" title="导致除权的情况"></a>导致除权的情况</h3><p>除权是由于公司股本增加，每股股票代表的企业实际价值减少。有三种情况会导致股票除权</p>
+<ul>
+<li>送股：以公司当年利润派发新股</li>
+<li>转股：以公司盈余公积金转增股本</li>
+<li>配股：向股东有偿按比例配售一定数额的股票</li>
+<li>拆股：暂时不讨论。。<h3 id="导致除息的情况"><a href="#导致除息的情况" class="headerlink" title="导致除息的情况"></a>导致除息的情况</h3>上市公司将盈余以现金的形式分给股东。因此公司的股东权益减少，股本不变的情况下，股价降低。</li>
+</ul>
+<h3 id="除权除息流程"><a href="#除权除息流程" class="headerlink" title="除权除息流程"></a>除权除息流程</h3><ol>
+<li>预案披露日</li>
+<li>股东大会日(确定分红)</li>
+<li>股权登记日(当天收盘时的股东将享有分红送股的权利)</li>
+<li>除权除息日(一般为股权登记日后一天)</li>
+</ol>
+<h3 id="除权价的计算"><a href="#除权价的计算" class="headerlink" title="除权价的计算"></a>除权价的计算</h3><p>在不考虑配股的情况下，<code>除权价 = (股权登记日收盘价 - 每股派息)/(1+送股比例+转股比例)</code><br><br>对于配股的除权价：<code>（除权登记日收盘价+配股价×每股配股比例）/（1+每股配股比例)</code></p>
+<h3 id="送股派息领取办法"><a href="#送股派息领取办法" class="headerlink" title="送股派息领取办法"></a>送股派息领取办法</h3><p>上交所股息T+2日到账，送股T+1日到账<br><br>深交所股息T+5日到账，送股T+3日到账</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><figure class="highlight"><table><tr><td class="code"><pre><div class="line">转送除权：股本增加，股东权益不变，股价下降</div><div class="line">配股除权：通常配股价会相对于现价折价，股价下降</div><div class="line">现金分红除息：股本不变，股东权益的减少，股价下降</div><div class="line">除权除息后勿忘对成交量的处理</div></pre></td></tr></table></figure>
+<h2 id="复权方式"><a href="#复权方式" class="headerlink" title="复权方式"></a>复权方式</h2><h3 id="前复权"><a href="#前复权" class="headerlink" title="前复权"></a>前复权</h3><p>保持现有价位不变，将以前的价格缩减，将除权前的K线向下平移<br><code>将除权除息前股价按上文的除权价处理</code></p>
+<h3 id="后复权"><a href="#后复权" class="headerlink" title="后复权"></a>后复权</h3><p>保持先前的价格不变，而将以后的价格增加<br><code>将除权除息后股价按上文的除权价反向计算</code></p>
+<h3 id="复权因子计算"><a href="#复权因子计算" class="headerlink" title="复权因子计算"></a>复权因子计算</h3><p><code>登记日收盘价*(1+配股比例+送股比例)/(登记日收盘价-每股分红+配股价*配股比例)</code></p>
+<h2 id="复权方式对回测结果的影响"><a href="#复权方式对回测结果的影响" class="headerlink" title="复权方式对回测结果的影响"></a>复权方式对回测结果的影响</h2><h3 id="遇到现金分红"><a href="#遇到现金分红" class="headerlink" title="遇到现金分红"></a>遇到现金分红</h3><p>当投资者进行正常交易的情况下：股份数量不变，股价下降，现金增多。<br>举一个简单的例子：花10000元买入股票</p>
+<ul>
+<li>第一天价格为10元(用10/100表示)</li>
+<li>第二天每股送5元，5.5/100+500现金</li>
+<li>第三天6/100+500现金<br>到第三天收盘，所有收益为<code>500+100*(6-10)= 100元</code><br>复权因子 = 10*1/5 = 2<h4 id="若使用复权价-前复权-，相当于将分红的现金视作买入了股票！！"><a href="#若使用复权价-前复权-，相当于将分红的现金视作买入了股票！！" class="headerlink" title="若使用复权价(前复权)，相当于将分红的现金视作买入了股票！！"></a>若使用复权价(前复权)，相当于将分红的现金视作买入了股票！！</h4></li>
+<li>第一天5/100</li>
+<li>第二天5.5/100</li>
+<li>第三天6/100<br>到第三天收盘，所有收益为<code>200*(6-5) = 200元</code>，比真实情况多了100元。<br><br>这100元相当于是在分红当天按除权价买入了股票，最后得到的收益。<br><br>因此，<code>使用复权价是绝对绝对绝对错误的</code>。</li>
+</ul>
+<h3 id="遇到转送分红"><a href="#遇到转送分红" class="headerlink" title="遇到转送分红"></a>遇到转送分红</h3><p>当投资者进行正常交易的情况下：股份数量增多，股价下降，现金不变。<br>相同的例子下：花10000元买入股票</p>
+<ul>
+<li>第一天价格为10元(用10/100表示)</li>
+<li>第二天10送10，5.5/200</li>
+<li>第三天6/200<br>到第三天收盘，所有收益为<code>600+100*(6-10)= 200元</code><br>复权因子 = 10*2/10 = 2    </li>
+</ul>
+<h4 id="若使用前复权，相当于将分红的现金视作买入了股票！！"><a href="#若使用前复权，相当于将分红的现金视作买入了股票！！" class="headerlink" title="若使用前复权，相当于将分红的现金视作买入了股票！！"></a>若使用前复权，相当于将分红的现金视作买入了股票！！</h4><ul>
+<li>第一天5/100</li>
+<li>第二天5.5/100</li>
+<li>第三天6/100<br>到第三天收盘，所有收益为<code>200*(6-5) = 200元</code>，与真实情况相同。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在对alpha策略回测时，容易忽略以下几点:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;涨跌停限制&lt;/li&gt;
+&lt;li&gt;期货保证金要求&lt;/li&gt;
+&lt;li&gt;期货移仓价差&lt;/li&gt;
+&lt;li&gt;期货择时损益&lt;/li&gt;
+&lt;li&gt;期货基差损益&lt;/li&gt;
+&lt;li&gt;交易滑点&lt;/li&gt;
+&lt;li&gt;缩股、股改&lt;/
+    
+    </summary>
+    
+      <category term="量化交易" scheme="http://yoursite.com/categories/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python多进程编程</title>
+    <link href="http://yoursite.com/2016/10/17/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/"/>
+    <id>http://yoursite.com/2016/10/17/python多进程编程/</id>
+    <published>2016-10-16T16:59:26.000Z</published>
+    <updated>2016-10-17T06:00:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于GIL的存在，python多线程无法完成多核并行运算，因此在处理CPU-bound的工作时，可以利用multiprocessing模块实现多进程编程。与多线程相比，多进程有以下优点：</p>
+<ul>
+<li>不受GIL限制</li>
+<li>在Mac和Linux系统下效率高</li>
+</ul>
+<h2 id="1-The-Process-class"><a href="#1-The-Process-class" class="headerlink" title="1. The Process class"></a>1. The Process class</h2><p>In multiprocessing, processes are spawned by creating a Process object and then calling its start() method. Process follows the API of threading.Thread. </p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">class multiprocessing.Process()</div><div class="line"></div><div class="line">pid           # Return the process ID</div><div class="line">exitcode      # The child’s exit code.</div><div class="line">terminate()   # Terminate the process.</div><div class="line">daemon        # When a process exits, it attempts to terminate all of its daemonic child processes.</div></pre></td></tr></table></figure>
+<p>The multiprocessing module also introduces APIs which do not have analogs in the threading module.</p>
+<ul>
+<li>Queue and Pipe</li>
+<li>Pool</li>
+</ul>
+<p>Note: on windows, <code>if __name__ == &#39;__main__&#39;</code> is especially important since on windows, this module spawns processes by creating new python interpreter which is different from the fork() method in Unix. And because of this, windows will take more time and resources to spawn processes compared to Unix.</p>
+<p>use <code>set_start_method(&#39;spawn&#39;)</code> to set start method</p>
+<h2 id="2-Communication-between-processes"><a href="#2-Communication-between-processes" class="headerlink" title="2. Communication between processes"></a>2. Communication between processes</h2><p>Use pipe and queue to avoid having to use any synchronization primitives like locks.</p>
+<h3 id="Queue-FIFO"><a href="#Queue-FIFO" class="headerlink" title="Queue(FIFO)"></a>Queue(FIFO)</h3><p><code>class multiprocessing.Queue([maxsize])</code><br><figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">qsize()          <span class="comment"># Return the approximate size of the queue</span></div><div class="line">empty()/full()   </div><div class="line"><span class="keyword">put</span>(obj[, block[, <span class="keyword">timeout</span>]])</div><div class="line"><span class="keyword">get</span>([block[, <span class="keyword">timeout</span>]])    <span class="comment"># Remove and return an item from the queue</span></div><div class="line">close()          <span class="comment"># Indicate that no more data will be put on this queue by the current process</span></div><div class="line">join_thread()    <span class="comment"># Join the background thread after called close()</span></div><div class="line">cancel_join_thread()</div></pre></td></tr></table></figure></p>
+<p>Queue example:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Queue</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(q)</span>:</span></div><div class="line">    q.put([<span class="number">42</span>, <span class="keyword">None</span>, <span class="string">'hello'</span>])</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    q = Queue()</div><div class="line">    p = Process(target=f, args=(q,))</div><div class="line">    p.start()</div><div class="line">    print(q.get())    <span class="comment"># prints "[42, None, 'hello']"</span></div><div class="line">    p.join()</div></pre></td></tr></table></figure>
+<h2 id="3-Pool"><a href="#3-Pool" class="headerlink" title="3. Pool"></a>3. Pool</h2><p>The Pool class represents a pool of worker processes. It has methods which allows tasks to be offloaded to the worker processes in a few different ways.</p>
+<p>One can create a pool of processes which will carry out tasks submitted to it with the Pool class.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">multiprocessing</span>.<span class="title">pool</span>.<span class="title">Pool</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<p>If you need to run a function in a separate process, but want the current process to block until that function returns, use <code>map</code> or <code>apply</code>, otherwise, use <code>map_async</code> or <code>apply_async</code>.</p>
+<p><code>map(func, iterable[, chunksize])</code>: same like <code>map</code> function,     applies the same function to many arguments.</p>
+<p><code>map_async(func[, args[, kwds[, callback[, error_callback]]]])</code>: call returns immediately instead of waiting for the result. You call its <code>get()</code> method to retrieve the result of the function call. When the function is complete, <code>callback()</code> is called. This can be used instead of calling <code>get()</code>.</p>
+<p>An example of callback function:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing <span class="keyword">as</span> mp</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo_pool</span><span class="params">(x)</span>:</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> x*x</div><div class="line"></div><div class="line">result_list = []</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_result</span><span class="params">(result)</span>:</span></div><div class="line">    <span class="comment"># This is called whenever foo_pool(i) returns a result.</span></div><div class="line">    <span class="comment"># result_list is modified only by the main process, not the pool workers.</span></div><div class="line">    result_list.append(result)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">apply_async_with_callback</span><span class="params">()</span>:</span></div><div class="line">    pool = mp.Pool()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">        pool.apply_async(foo_pool, args = (i, ), callback = log_result)</div><div class="line">    pool.close()</div><div class="line">    pool.join()</div><div class="line">    print(result_list)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    apply_async_with_callback()</div></pre></td></tr></table></figure></p>
+<p><code>starmap_async(func, iterable[, chunksize])</code>: Like <code>map()</code> except that the elements of the iterable are expected to be iterables that are unpacked as arguments.</p>
+<p>An example of starmap_async:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partial</div><div class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> repeat</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool, freeze_support</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    a_args = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">    second_arg = <span class="number">1</span></div><div class="line">    <span class="keyword">with</span> Pool() <span class="keyword">as</span> pool:</div><div class="line">    	<span class="comment"># use startmap</span></div><div class="line">        L = pool.starmap(func, [(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>)])</div><div class="line">        M = pool.starmap(func, zip(a_args, repeat(second_arg)))</div><div class="line"></div><div class="line">        <span class="comment"># use partial function</span></div><div class="line">        N = pool.map(partial(func, b=second_arg), a_args)</div><div class="line">        <span class="keyword">assert</span> L == M == N</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</div><div class="line">    freeze_support()</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<h2 id="4-Sharing-state-between-processes"><a href="#4-Sharing-state-between-processes" class="headerlink" title="4. Sharing state between processes"></a>4. Sharing state between processes</h2><h3 id="Shared-memory"><a href="#Shared-memory" class="headerlink" title="Shared memory"></a>Shared memory</h3><p>Using <code>Value</code> and <code>Array</code> to share data:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Value, Array</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(n, a)</span>:</span></div><div class="line">    n.value = <span class="number">3.1415927</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</div><div class="line">        a[i] = -a[i]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    num = Value(<span class="string">'d'</span>, <span class="number">0.0</span>)</div><div class="line">    arr = Array(<span class="string">'i'</span>, range(<span class="number">10</span>))</div><div class="line"></div><div class="line">    p = Process(target=f, args=(num, arr))</div><div class="line">    p.start()</div><div class="line">    p.join()</div><div class="line"></div><div class="line">    print(num.value)</div><div class="line">    print(arr[:])</div></pre></td></tr></table></figure></p>
+<h3 id="Server-process"><a href="#Server-process" class="headerlink" title="Server process"></a>Server process</h3><p>A manager object returned by Manager() controls a server process which holds Python objects and allows other processes to manipulate them using proxies.<br>Server process managers are more flexible than using shared memory objects because they can be made to support arbitrary object types. Also, a single manager can be shared by processes on different computers over a network. They are, however, slower than using shared memory.</p>
+<h2 id="5-The-multiprocessing-dummy-module"><a href="#5-The-multiprocessing-dummy-module" class="headerlink" title="5. The multiprocessing.dummy module"></a>5. The multiprocessing.dummy module</h2><p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.</p>
+<p>Test the efficiency of multithreading and multiprocessing<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">urls = [</div><div class="line">    <span class="string">'http://www.python.org'</span>, </div><div class="line">    <span class="string">'http://www.python.org/about/'</span>,</div><div class="line">    <span class="string">'http://www.onlamp.com/pub/a/python/2003/04/17/metaclasses.html'</span>,</div><div class="line">    <span class="string">'http://www.python.org/doc/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/download/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/getit/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/community/'</span>,</div><div class="line">    <span class="string">'https://wiki.python.org/moin/'</span>,</div><div class="line">    <span class="string">'http://planet.python.org/'</span>,</div><div class="line">    <span class="string">'https://wiki.python.org/moin/LocalUserGroups'</span>,</div><div class="line">    <span class="string">'http://www.python.org/psf/'</span>,</div><div class="line">    <span class="string">'http://docs.python.org/devguide/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/community/awards/'</span> </div><div class="line">    ]</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line"><span class="comment"># Make the Pool of workers </span></div><div class="line"><span class="keyword">with</span> ThreadPool(<span class="number">8</span>) <span class="keyword">as</span> thread_pool:</div><div class="line">	results = thread_pool.map_async(urlopen, urls)</div><div class="line">thread_pool.join()</div><div class="line">t2 = time.time()</div><div class="line">print(<span class="string">"threading use &#123;&#125; seconds"</span>.format(t2-t1))</div><div class="line"></div><div class="line">t3 = time.time()</div><div class="line"><span class="keyword">with</span> Pool(<span class="number">8</span>) <span class="keyword">as</span> process_pool:</div><div class="line">	results = process_pool.map_async(urlopen, urls)</div><div class="line">process_pool.join()</div><div class="line">t4 = time.time()</div><div class="line">print(<span class="string">"multiprocessing use &#123;&#125; seconds"</span>.format(t4-t3))</div></pre></td></tr></table></figure></p>
+<p>Result:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">threading <span class="keyword">use</span> <span class="number">0.10493803024291992</span> seconds</div><div class="line">multiprocessing <span class="keyword">use</span> <span class="number">0.1377570629119873</span> seconds</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于GIL的存在，python多线程无法完成多核并行运算，因此在处理CPU-bound的工作时，可以利用multiprocessing模块实现多进程编程。与多线程相比，多进程有以下优点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不受GIL限制&lt;/li&gt;
+&lt;li&gt;在Mac和Linux系统下
+    
+    </summary>
+    
+      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="multiprocessing" scheme="http://yoursite.com/tags/multiprocessing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>With statement in python</title>
+    <link href="http://yoursite.com/2016/10/16/python_With_statement/"/>
+    <id>http://yoursite.com/2016/10/16/python_With_statement/</id>
+    <published>2016-10-16T15:10:59.000Z</published>
+    <updated>2016-10-17T04:12:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>The <code>with</code> statement is used to wrap the execution of a block with methods defined by a context manager. This allows common <code>try...except...finally</code> usage patterns to be encapsulated for convenient reuse.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># original code</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    f = open(<span class="string">'/path/to/file'</span>, <span class="string">'r'</span>)</div><div class="line">    print(f.read())</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    <span class="keyword">if</span> f:</div><div class="line">        f.close()</div><div class="line"></div><div class="line"><span class="comment"># use 'with' statement</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'/path/to/file'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">    print(f.read())</div></pre></td></tr></table></figure>
+<p>How does <code>with</code> statement works? <br></p>
+<p>When execuating a <code>with</code> statment, an object called <code>Context managers</code> are normally invoked.<br>The context manager handles the entry into, and the exit from, the desired runtime context for the execution of the block of code.</p>
+<ol>
+<li><p>The context expression (the expression given in the with_item) is evaluated to obtain a context manager.</p>
+</li>
+<li><p>The context manager’s <code>__exit__()</code> is loaded for later use.</p>
+</li>
+<li><p>The context manager’s <code>__enter__()</code> method is invoked.</p>
+</li>
+<li><p>If a target was included in the with statement, the return value from <code>__enter__()</code> is assigned to it.</p>
+</li>
+<li><p>The context manager’s <code>__exit__()</code> method is invoked. If an exception caused the suite to be exited, its type, value, and traceback are passed as arguments to <code>__exit__()</code>. Otherwise, three None arguments are supplied.</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">controlled_execution</span>:</span></div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></div><div class="line">           set things up</div><div class="line">           <span class="keyword">return</span> thing</div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, traceback)</span>:</span></div><div class="line">           tear things down</div><div class="line"></div><div class="line">   <span class="keyword">with</span> controlled_execution() <span class="keyword">as</span> thing:</div><div class="line">        some code</div></pre></td></tr></table></figure>
+<p>The with statement guarantees that if the <code>__enter__()</code> method returns without an error, then <code>__exit__()</code> will always be called. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;The &lt;code&gt;with&lt;/code&gt; statement is used to wrap the execution of a block with methods defined by a context manager. This allows common &lt;c
+    
+    </summary>
+    
+      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>希腊值详细整理</title>
+    <link href="http://yoursite.com/2016/10/15/%E5%B8%8C%E8%85%8A%E5%80%BC%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://yoursite.com/2016/10/15/希腊值详解/</id>
+    <published>2016-10-15T07:16:29.000Z</published>
+    <updated>2016-10-17T06:03:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Risks for the options are multi-dimensional. We must know how changing market conditions are likely to change an option’s value and risk associated with the position.</p>
+<h3 id="1-Delta-rate-of-change-in-the-option-value"><a href="#1-Delta-rate-of-change-in-the-option-value" class="headerlink" title="1. Delta: rate of change in the option value"></a>1. Delta: rate of change in the option value</h3><h4 id="Defination-and-characters"><a href="#Defination-and-characters" class="headerlink" title="Defination and characters"></a>Defination and characters</h4><ul>
+<li><p>The directional risk of an option in terms of an equivalent position in the underlying contract.</p>
+<ul>
+<li>For each purchased (sold) option you have a directional risk equivalent to being long (short) 50% of an underlying contract</li>
+<li>Being long delta means that the price of the option increases as the spot goes up. </li>
+</ul>
+</li>
+<li><p>Approximately the probability that an option will finish in-the-money. (from Black-Scholes formular)</p>
+</li>
+</ul>
+<h4 id="Influence-from-time-and-underlying-price"><a href="#Influence-from-time-and-underlying-price" class="headerlink" title="Influence from time and underlying price"></a>Influence from time and underlying price</h4><ul>
+<li><p>With the approaching of expiration date:</p>
+<ul>
+<li>ATM stays the same</li>
+<li>ITM becomes more in the money</li>
+<li>OTM becomes more out of the money</li>
+</ul>
+</li>
+<li><p>The delta increases as the price of the underlying increases for both <code>call and put</code>.</p>
+<ul>
+<li>When the option is deep in the money, its value changes at a rate almost identical to that of the underlying. When the option is deep out of money, its value only slightly changed. </li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Gamma-rate-of-change-in-the-delta-value"><a href="#2-Gamma-rate-of-change-in-the-delta-value" class="headerlink" title="2. Gamma: rate of change in the delta value"></a>2. Gamma: rate of change in the delta value</h3><h4 id="Defination-and-characters-1"><a href="#Defination-and-characters-1" class="headerlink" title="Defination and characters"></a>Defination and characters</h4><ul>
+<li><p>The rate of change in an option’s delta with respect to movement in the price of the underlying contract</p>
+</li>
+<li><p>Both calls and puts must have positive gamma</p>
+</li>
+<li><p>When Gamma is negative, if market goes up, the delta decrease which is bad for my position. So when Gamma is negative, we want the market to be quite.</p>
+<ul>
+<li>if the market sits still, profits come from theta</li>
+<li>Gamma and theta are always opposite sign</li>
+</ul>
+</li>
+<li><p>So for long Gamma, we want the market to make big move.</p>
+</li>
+</ul>
+<h4 id="Influence-from-time-and-underlying-price-1"><a href="#Influence-from-time-and-underlying-price-1" class="headerlink" title="Influence from time and underlying price"></a>Influence from time and underlying price</h4><ul>
+<li><p>With the approaching of expiration date:</p>
+<ul>
+<li>the gamma of ATM increases dramatically </li>
+<li>the gamma of ITM and OTM decreases to zero</li>
+</ul>
+</li>
+<li><p>Gamma increases as the option moves from being in-the-money reaching its peak when the option is at-the-money. Then as the option moves out-of-the-money the Gamma then decreases. Gamma increases as time to maturity decreases.</p>
+</li>
+</ul>
+<h3 id="3-Theta"><a href="#3-Theta" class="headerlink" title="3. Theta"></a>3. Theta</h3><h4 id="Defination-and-characters-2"><a href="#Defination-and-characters-2" class="headerlink" title="Defination and characters"></a>Defination and characters</h4><ul>
+<li><p>The sensitivity of an option’s value to the passage of time</p>
+<ul>
+<li>Usually expressed as the change in value per one day’s passage of time</li>
+</ul>
+</li>
+<li><p>Depends on two factors: </p>
+<ul>
+<li>decay in volatility value</li>
+<li>decay in interest value</li>
+</ul>
+</li>
+<li><p>An option which loses value as time passes will have a negative theta. the great majority of options lose value as time passes.</p>
+</li>
+<li><p>A positive theta: when present value of the expected value of the underlying asset is equal to the value today.</p>
+<ul>
+<li>If there are no changes in other market conditions, as time passes, the value of the option will rise to intrinsic value. (negative time value)</li>
+<li>must be deep in-the-money, so that time value is negative</li>
+<li>must be European and subject to stock-type settlement</li>
+<li>Intuitively: the value of the option is known, so it needs to be compounded to today –&gt; negative time value.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Influence-from-time-and-underlying-price-2"><a href="#Influence-from-time-and-underlying-price-2" class="headerlink" title="Influence from time and underlying price"></a>Influence from time and underlying price</h4><ul>
+<li>As time passes the theta of an at-the-money option increases like gamma.(absolute value)</li>
+</ul>
+<h3 id="4-Vega-The-sensitivity-of-an-option’s-value-to-a-change-in-volatility"><a href="#4-Vega-The-sensitivity-of-an-option’s-value-to-a-change-in-volatility" class="headerlink" title="4. Vega: The sensitivity of an option’s value to a change in volatility"></a>4. Vega: The sensitivity of an option’s value to a change in volatility</h3><h4 id="Defination-and-characters-3"><a href="#Defination-and-characters-3" class="headerlink" title="Defination and characters"></a>Defination and characters</h4><ul>
+<li>the change in implied volatility</li>
+<li>all options have positive vega values</li>
+</ul>
+<h4 id="Influence-from-time-and-underlying-price-3"><a href="#Influence-from-time-and-underlying-price-3" class="headerlink" title="Influence from time and underlying price"></a>Influence from time and underlying price</h4><ul>
+<li><code>As time passes the theta of an at-the-money option increases.</code></li>
+<li><code>Long-term options are more sensitive to a change in volatility than short-term options.</code><ul>
+<li>A long-term option always has a greater vega value than an equivalent short-term option.</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-Rho-The-sensitivity-of-an-option’s-value-to-a-change-in-interest-rates"><a href="#5-Rho-The-sensitivity-of-an-option’s-value-to-a-change-in-interest-rates" class="headerlink" title="5. Rho: The sensitivity of an option’s value to a change in interest rates"></a>5. Rho: The sensitivity of an option’s value to a change in interest rates</h3><h4 id="Defination-and-characters-4"><a href="#Defination-and-characters-4" class="headerlink" title="Defination and characters"></a>Defination and characters</h4><ul>
+<li><code>Can be determined by wheter a call(put) is a better or worse substitute for the outright purchase of the underlying contract</code></li>
+<li>If the underlying is a futures contract, and options are subject to futures-type settlement, all options have a rho value of zero.</li>
+<li><p>For stock type settlement:</p>
+<ul>
+<li>options on futures have negative rho values<ul>
+<li>future contracts have no carrying cost but options have</li>
+<li>the effect is small since the value of the option is small</li>
+</ul>
+</li>
+<li>calls have positive, puts are negative</li>
+</ul>
+</li>
+<li><p>In stock option markets, interest and dividends always have the opposite effect on option values.</p>
+</li>
+<li><p>The amount of money and the length of the investment determine how sensitive an investment is to a change in interest rates</p>
+<ul>
+<li>An in-the-money option has a greater rho value than an equivalent at-the-money or out-of-the-money option</li>
+<li>A long-term option has a greater rho value than equivalent short-term option.</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Risks for the options are multi-dimensional. We must know how changing market conditions are likely to change an option’s value and risk 
+    
+    </summary>
+    
+      <category term="期权" scheme="http://yoursite.com/categories/%E6%9C%9F%E6%9D%83/"/>
+    
+    
+      <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
+    
+  </entry>
+  
+</feed>
