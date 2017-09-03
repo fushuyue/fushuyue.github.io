@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2017-09-03T10:25:31.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/09/03/%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%94%B5%E8%84%91%E4%B8%8A%E6%9B%B4%E6%96%B0blog/</loc>
     
     <lastmod>2017-09-03T10:22:06.000Z</lastmod>
@@ -152,13 +159,6 @@
     <loc>http://yoursite.com/2016/10/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/</loc>
     
     <lastmod>2016-10-17T04:05:26.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2016-10-15T22:56:45.000Z</lastmod>
     
   </url>
   
