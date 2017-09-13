@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-13T13:18:27.000Z</updated>
+  <updated>2017-09-13T13:40:00.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习基础</title>
+    <link href="http://yoursite.com/2017/09/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2017/09/13/机器学习基础/</id>
+    <published>2017-09-13T13:39:20.000Z</published>
+    <updated>2017-09-13T13:40:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p><code>学习算法</code>：在计算机上从数据中产生模型的算法</p>
+<p><code>泛化能力</code>：学得模型适用于新样本的能力</p>
+<ul>
+<li>我们希望找到在新样本上能表现很好的学习器，能从训练样本中学到适用于所有潜在样本的普遍规律。</li>
+</ul>
+<p><code>学习过程</code>：一个在所有假设所组成的空间中进行搜索的过程，搜索目标是找到与训练集尽可能匹配的假设</p>
+<ul>
+<li>学习过程是基于有限样本训练的，因此可能有多个假设与训练集一致，即存在着一个与训练集一致的假设集合(version space)</li>
+</ul>
+<p><code>归纳偏好</code>：机器学习算法在学习过程中对某种类型假设的偏好</p>
+<ul>
+<li>一般性原则指导原则：奥卡姆剃刀(若有多个假设，则选最简单的那个)</li>
+</ul>
+<p><code>No free lunch theorem</code>: 若考虑所有潜在问题，则所有学习算法都一样好</p>
+<ul>
+<li>讨论算法的优劣需针对具体的学习问题</li>
+</ul>
+<hr>
+<h3 id="模型评估与选择"><a href="#模型评估与选择" class="headerlink" title="模型评估与选择"></a>模型评估与选择</h3><p>经验误差：模型在训练集上的误差<br>泛化误差：模型在新样本上的误差<br>过拟合：把训练样本自身的一些特性当做了所有潜在样本都会具有的一般性质，从而导致泛化性能下降<br>欠拟合：对训练样本的一般性质未学习到位</p>
+<h4 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h4><p>训练/测试集的划分要尽可能保持数据分布的一致性，避免因数据划分过程引入额外的偏差而对最终结果产生影响</p>
+<ol>
+<li>stratified sampling</li>
+</ol>
+<ul>
+<li>保留类别比例</li>
+<li>通常2/3到4/5用于训练</li>
+</ul>
+<ol>
+<li>cross validation</li>
+</ol>
+<ul>
+<li>将数据集D分为k个大小相似的互斥子集，每个子集尽可能保持数据分布的一致性</li>
+<li>用k-1个子集训练，用剩下的子集测试</li>
+</ul>
+<ol>
+<li>bootstrapping</li>
+</ol>
+<ul>
+<li>每次从D中有放回的随机抽取一个样本放入D1，重复m次。</li>
+<li>D中约有0.368的样本未出现在D1中，因此用D/D1用作测试、D1用作训练称为包外训练</li>
+<li>会引入估计偏差</li>
+</ul>
+<h3 id="泛化能力度量"><a href="#泛化能力度量" class="headerlink" title="泛化能力度量"></a>泛化能力度量</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h3&gt;&lt;p&gt;&lt;code&gt;学习算法&lt;/code&gt;：在计算机上从数据中产生模型的算法&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;泛化能力&lt;/code&gt;：学得
+    
+    </summary>
+    
+      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>cuda installation guide</title>
@@ -1314,65 +1379,6 @@
     
     
       <category term="quant" scheme="http://yoursite.com/tags/quant/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python多进程编程</title>
-    <link href="http://yoursite.com/2016/10/17/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/"/>
-    <id>http://yoursite.com/2016/10/17/python多进程编程/</id>
-    <published>2016-10-16T16:59:26.000Z</published>
-    <updated>2016-10-17T06:00:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>由于GIL的存在，python多线程无法完成多核并行运算，因此在处理CPU-bound的工作时，可以利用multiprocessing模块实现多进程编程。与多线程相比，多进程有以下优点：</p>
-<ul>
-<li>不受GIL限制</li>
-<li>在Mac和Linux系统下效率高</li>
-</ul>
-<h2 id="1-The-Process-class"><a href="#1-The-Process-class" class="headerlink" title="1. The Process class"></a>1. The Process class</h2><p>In multiprocessing, processes are spawned by creating a Process object and then calling its start() method. Process follows the API of threading.Thread. </p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">class multiprocessing.Process()</div><div class="line"></div><div class="line">pid           # Return the process ID</div><div class="line">exitcode      # The child’s exit code.</div><div class="line">terminate()   # Terminate the process.</div><div class="line">daemon        # When a process exits, it attempts to terminate all of its daemonic child processes.</div></pre></td></tr></table></figure>
-<p>The multiprocessing module also introduces APIs which do not have analogs in the threading module.</p>
-<ul>
-<li>Queue and Pipe</li>
-<li>Pool</li>
-</ul>
-<p>Note: on windows, <code>if __name__ == &#39;__main__&#39;</code> is especially important since on windows, this module spawns processes by creating new python interpreter which is different from the fork() method in Unix. And because of this, windows will take more time and resources to spawn processes compared to Unix.</p>
-<p>use <code>set_start_method(&#39;spawn&#39;)</code> to set start method</p>
-<h2 id="2-Communication-between-processes"><a href="#2-Communication-between-processes" class="headerlink" title="2. Communication between processes"></a>2. Communication between processes</h2><p>Use pipe and queue to avoid having to use any synchronization primitives like locks.</p>
-<h3 id="Queue-FIFO"><a href="#Queue-FIFO" class="headerlink" title="Queue(FIFO)"></a>Queue(FIFO)</h3><p><code>class multiprocessing.Queue([maxsize])</code><br><figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">qsize()          <span class="comment"># Return the approximate size of the queue</span></div><div class="line">empty()/full()   </div><div class="line"><span class="keyword">put</span>(obj[, block[, <span class="keyword">timeout</span>]])</div><div class="line"><span class="keyword">get</span>([block[, <span class="keyword">timeout</span>]])    <span class="comment"># Remove and return an item from the queue</span></div><div class="line">close()          <span class="comment"># Indicate that no more data will be put on this queue by the current process</span></div><div class="line">join_thread()    <span class="comment"># Join the background thread after called close()</span></div><div class="line">cancel_join_thread()</div></pre></td></tr></table></figure></p>
-<p>Queue example:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Queue</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(q)</span>:</span></div><div class="line">    q.put([<span class="number">42</span>, <span class="keyword">None</span>, <span class="string">'hello'</span>])</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    q = Queue()</div><div class="line">    p = Process(target=f, args=(q,))</div><div class="line">    p.start()</div><div class="line">    print(q.get())    <span class="comment"># prints "[42, None, 'hello']"</span></div><div class="line">    p.join()</div></pre></td></tr></table></figure>
-<h2 id="3-Pool"><a href="#3-Pool" class="headerlink" title="3. Pool"></a>3. Pool</h2><p>The Pool class represents a pool of worker processes. It has methods which allows tasks to be offloaded to the worker processes in a few different ways.</p>
-<p>One can create a pool of processes which will carry out tasks submitted to it with the Pool class.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">multiprocessing</span>.<span class="title">pool</span>.<span class="title">Pool</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
-<p>If you need to run a function in a separate process, but want the current process to block until that function returns, use <code>map</code> or <code>apply</code>, otherwise, use <code>map_async</code> or <code>apply_async</code>.</p>
-<p><code>map(func, iterable[, chunksize])</code>: same like <code>map</code> function,     applies the same function to many arguments.</p>
-<p><code>map_async(func[, args[, kwds[, callback[, error_callback]]]])</code>: call returns immediately instead of waiting for the result. You call its <code>get()</code> method to retrieve the result of the function call. When the function is complete, <code>callback()</code> is called. This can be used instead of calling <code>get()</code>.</p>
-<p>An example of callback function:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing <span class="keyword">as</span> mp</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo_pool</span><span class="params">(x)</span>:</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> x*x</div><div class="line"></div><div class="line">result_list = []</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_result</span><span class="params">(result)</span>:</span></div><div class="line">    <span class="comment"># This is called whenever foo_pool(i) returns a result.</span></div><div class="line">    <span class="comment"># result_list is modified only by the main process, not the pool workers.</span></div><div class="line">    result_list.append(result)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">apply_async_with_callback</span><span class="params">()</span>:</span></div><div class="line">    pool = mp.Pool()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">        pool.apply_async(foo_pool, args = (i, ), callback = log_result)</div><div class="line">    pool.close()</div><div class="line">    pool.join()</div><div class="line">    print(result_list)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    apply_async_with_callback()</div></pre></td></tr></table></figure></p>
-<p><code>starmap_async(func, iterable[, chunksize])</code>: Like <code>map()</code> except that the elements of the iterable are expected to be iterables that are unpacked as arguments.</p>
-<p>An example of starmap_async:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partial</div><div class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> repeat</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool, freeze_support</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    a_args = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">    second_arg = <span class="number">1</span></div><div class="line">    <span class="keyword">with</span> Pool() <span class="keyword">as</span> pool:</div><div class="line">    	<span class="comment"># use startmap</span></div><div class="line">        L = pool.starmap(func, [(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>)])</div><div class="line">        M = pool.starmap(func, zip(a_args, repeat(second_arg)))</div><div class="line"></div><div class="line">        <span class="comment"># use partial function</span></div><div class="line">        N = pool.map(partial(func, b=second_arg), a_args)</div><div class="line">        <span class="keyword">assert</span> L == M == N</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</div><div class="line">    freeze_support()</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
-<h2 id="4-Sharing-state-between-processes"><a href="#4-Sharing-state-between-processes" class="headerlink" title="4. Sharing state between processes"></a>4. Sharing state between processes</h2><h3 id="Shared-memory"><a href="#Shared-memory" class="headerlink" title="Shared memory"></a>Shared memory</h3><p>Using <code>Value</code> and <code>Array</code> to share data:<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Value, Array</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(n, a)</span>:</span></div><div class="line">    n.value = <span class="number">3.1415927</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</div><div class="line">        a[i] = -a[i]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    num = Value(<span class="string">'d'</span>, <span class="number">0.0</span>)</div><div class="line">    arr = Array(<span class="string">'i'</span>, range(<span class="number">10</span>))</div><div class="line"></div><div class="line">    p = Process(target=f, args=(num, arr))</div><div class="line">    p.start()</div><div class="line">    p.join()</div><div class="line"></div><div class="line">    print(num.value)</div><div class="line">    print(arr[:])</div></pre></td></tr></table></figure></p>
-<h3 id="Server-process"><a href="#Server-process" class="headerlink" title="Server process"></a>Server process</h3><p>A manager object returned by Manager() controls a server process which holds Python objects and allows other processes to manipulate them using proxies.<br>Server process managers are more flexible than using shared memory objects because they can be made to support arbitrary object types. Also, a single manager can be shared by processes on different computers over a network. They are, however, slower than using shared memory.</p>
-<h2 id="5-The-multiprocessing-dummy-module"><a href="#5-The-multiprocessing-dummy-module" class="headerlink" title="5. The multiprocessing.dummy module"></a>5. The multiprocessing.dummy module</h2><p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.</p>
-<p>Test the efficiency of multithreading and multiprocessing<br><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">urls = [</div><div class="line">    <span class="string">'http://www.python.org'</span>, </div><div class="line">    <span class="string">'http://www.python.org/about/'</span>,</div><div class="line">    <span class="string">'http://www.onlamp.com/pub/a/python/2003/04/17/metaclasses.html'</span>,</div><div class="line">    <span class="string">'http://www.python.org/doc/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/download/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/getit/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/community/'</span>,</div><div class="line">    <span class="string">'https://wiki.python.org/moin/'</span>,</div><div class="line">    <span class="string">'http://planet.python.org/'</span>,</div><div class="line">    <span class="string">'https://wiki.python.org/moin/LocalUserGroups'</span>,</div><div class="line">    <span class="string">'http://www.python.org/psf/'</span>,</div><div class="line">    <span class="string">'http://docs.python.org/devguide/'</span>,</div><div class="line">    <span class="string">'http://www.python.org/community/awards/'</span> </div><div class="line">    ]</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line"><span class="comment"># Make the Pool of workers </span></div><div class="line"><span class="keyword">with</span> ThreadPool(<span class="number">8</span>) <span class="keyword">as</span> thread_pool:</div><div class="line">	results = thread_pool.map_async(urlopen, urls)</div><div class="line">thread_pool.join()</div><div class="line">t2 = time.time()</div><div class="line">print(<span class="string">"threading use &#123;&#125; seconds"</span>.format(t2-t1))</div><div class="line"></div><div class="line">t3 = time.time()</div><div class="line"><span class="keyword">with</span> Pool(<span class="number">8</span>) <span class="keyword">as</span> process_pool:</div><div class="line">	results = process_pool.map_async(urlopen, urls)</div><div class="line">process_pool.join()</div><div class="line">t4 = time.time()</div><div class="line">print(<span class="string">"multiprocessing use &#123;&#125; seconds"</span>.format(t4-t3))</div></pre></td></tr></table></figure></p>
-<p>Result:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">threading <span class="keyword">use</span> <span class="number">0.10493803024291992</span> seconds</div><div class="line">multiprocessing <span class="keyword">use</span> <span class="number">0.1377570629119873</span> seconds</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;由于GIL的存在，python多线程无法完成多核并行运算，因此在处理CPU-bound的工作时，可以利用multiprocessing模块实现多进程编程。与多线程相比，多进程有以下优点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不受GIL限制&lt;/li&gt;
-&lt;li&gt;在Mac和Linux系统下
-    
-    </summary>
-    
-      <category term="编程" scheme="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-      <category term="multiprocessing" scheme="http://yoursite.com/tags/multiprocessing/"/>
     
   </entry>
   
