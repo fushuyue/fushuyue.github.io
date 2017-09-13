@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-03T15:09:50.000Z</updated>
+  <updated>2017-09-13T13:18:27.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/09/03/cuda-installation-guide/"/>
     <id>http://yoursite.com/2017/09/03/cuda-installation-guide/</id>
     <published>2017-09-03T10:50:13.000Z</published>
-    <updated>2017-09-03T15:09:50.000Z</updated>
+    <updated>2017-09-13T13:18:27.000Z</updated>
     
     <content type="html"><![CDATA[<pre><code>CUDA® is a parallel computing platform and programming model invented by NVIDIA. It enables dramatic increases in computing performance by harnessing the power of the graphics processing unit (GPU).
 </code></pre><h4 id="Prerequsites"><a href="#Prerequsites" class="headerlink" title="Prerequsites:"></a>Prerequsites:</h4><ol>
@@ -70,7 +70,7 @@
 <li>check if cuda is installed properly<br><code>./deviceQuery</code></li>
 </ol>
 <p>If installed properly, terminal prints out the information about your GPU.</p>
-]]></content>
+<h3 id="Step-Four-Install-Cudnn"><a href="#Step-Four-Install-Cudnn" class="headerlink" title="Step Four: Install Cudnn"></a>Step Four: Install Cudnn</h3><figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line"><span class="comment">#解压文件</span></div><div class="line">tar -zxvf cudnn-<span class="number">6.5</span>-linux-x64-v2.tgz</div><div class="line"><span class="comment">#切换路径</span></div><div class="line">cd cuda</div><div class="line"><span class="comment">#复制lib文件到cuda安装路径下的lib64/</span></div><div class="line">sudo cp <span class="class"><span class="keyword">lib</span>* /<span class="title">usr</span>/<span class="title">local</span>/<span class="title">cuda</span>/<span class="title">lib64</span>/</span></div><div class="line"><span class="comment">#复制头文件</span></div><div class="line">sudo cp cudnn.h /usr/local/cuda/<span class="keyword">include</span>/</div><div class="line"></div><div class="line"><span class="comment">#更新软连接</span></div><div class="line">cd /usr/local/cuda/lib64/ </div><div class="line">sudo rm -rf libcudnn.so libcudnn.so.<span class="number">6.5</span> </div><div class="line">sudo ln -s libcudnn.so.<span class="number">6.5</span>.<span class="number">48</span> libcudnn.so.<span class="number">6.5</span> </div><div class="line">sudo ln -s libcudnn.so.<span class="number">6.5</span> libcudnn.so</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
